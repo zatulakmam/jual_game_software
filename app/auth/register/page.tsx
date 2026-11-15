@@ -84,7 +84,10 @@ export default function RegisterPage() {
         password: data.password,
         options: {
           data: { name: data.name.trim() },
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: new URL(
+            '/dashboard',
+            process.env.NEXT_PUBLIC_SITE_URL?.trim() || window.location.origin
+          ).toString(),
         },
       });
 
