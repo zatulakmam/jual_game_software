@@ -17,6 +17,31 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Create a customer profile automatically whenever Supabase Auth creates a user.
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+BEGIN
+  INSERT INTO public.profiles (id, name, email)
+  VALUES (
+    NEW.id,
+    COALESCE(NULLIF(BTRIM(NEW.raw_user_meta_data ->> 'name'), ''), SPLIT_PART(NEW.email, '@', 1)),
+    NEW.email
+  )
+  ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email;
+
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
 -- 2. CATEGORIES
 CREATE TABLE IF NOT EXISTS public.categories (
   id TEXT PRIMARY KEY,
@@ -118,6 +143,22 @@ ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.order_items ENABLE ROW LEVEL SECURITY;
+
+-- Customers can read their own profile and edit only non-privileged fields.
+DROP POLICY IF EXISTS "Users can view own profile" ON public.profiles;
+CREATE POLICY "Users can view own profile"
+  ON public.profiles FOR SELECT TO authenticated
+  USING (auth.uid() = id);
+
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
+CREATE POLICY "Users can update own profile"
+  ON public.profiles FOR UPDATE TO authenticated
+  USING (auth.uid() = id)
+  WITH CHECK (auth.uid() = id);
+
+REVOKE ALL ON public.profiles FROM PUBLIC, anon, authenticated;
+GRANT SELECT ON public.profiles TO authenticated;
+GRANT UPDATE (name, phone, avatar_url) ON public.profiles TO authenticated;
 
 -- Public can read products & categories
 CREATE POLICY "Public products viewable" ON public.products FOR SELECT USING (true);

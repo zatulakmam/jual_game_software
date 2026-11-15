@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Eye, EyeOff, Star, Zap, ShoppingBag } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -18,6 +20,7 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -25,23 +28,41 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginForm>({ resolver: zodResolver(loginSchema) });
 
-  const onSubmit = async (_data: LoginForm) => {
+  const onSubmit = async (data: LoginForm) => {
+    if (!isSupabaseConfigured) {
+      toast.error('Login belum tersedia. Konfigurasi Supabase terlebih dahulu.');
+      return;
+    }
+
     setIsLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setIsLoading(false);
-    toast.success('Login successful! Redirecting...', {
-      style: {
-        border: '2px solid #171717',
-        boxShadow: '4px 4px 0px #171717',
-        fontFamily: "'Space Grotesk', sans-serif",
-        fontWeight: 700,
-      },
-    });
+    try {
+      const { data: authData, error } = await createClient().auth.signInWithPassword({
+        email: data.email.trim(),
+        password: data.password,
+      });
+
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      if (!authData.user) {
+        toast.error('Login gagal. Silakan periksa email dan kata sandi Anda.');
+        return;
+      }
+
+      toast.success('Login berhasil.');
+      router.replace('/dashboard');
+      router.refresh();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Terjadi kesalahan saat login.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
-      <Toaster position="top-right" />
       <div
         style={{
           minHeight: '100vh',
@@ -411,7 +432,7 @@ export default function LoginPage() {
                 <p style={{ textAlign: 'center', fontSize: 15, fontWeight: 600, color: '#6B7280' }}>
                   Don&apos;t have an account?{' '}
                   <Link
-                    href="/auth/register"
+                    href="/register"
                     style={{
                       color: '#171717',
                       fontWeight: 800,

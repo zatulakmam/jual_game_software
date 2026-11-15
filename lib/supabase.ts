@@ -1,14 +1,19 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_key'
+const configuredUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const configuredAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-// Check if we're using real credentials
-const isConfigured =
-  supabaseUrl !== 'https://placeholder.supabase.co' &&
-  supabaseAnonKey !== 'placeholder_key'
+export const isSupabaseConfigured = Boolean(
+  configuredUrl &&
+    configuredAnonKey &&
+    !configuredUrl.includes('placeholder') &&
+    !configuredAnonKey.includes('placeholder')
+)
 
-if (!isConfigured && process.env.NODE_ENV !== 'test') {
+const supabaseUrl = configuredUrl || 'https://placeholder.supabase.co'
+const supabaseAnonKey = configuredAnonKey || 'placeholder_key'
+
+if (!isSupabaseConfigured && process.env.NODE_ENV !== 'test') {
   console.warn(
     '[PixelStore] Supabase not configured. Using placeholder values. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local'
   )

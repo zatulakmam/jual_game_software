@@ -131,8 +131,11 @@ File migrasi database PostgreSQL lengkap tersedia di:
 
 Untuk menghubungkan database sungguhan:
 1. Buat project baru di [Supabase](https://supabase.com).
-2. Salin isi `supabase/schema.sql` ke SQL Editor Supabase.
-3. Masukkan `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` ke `.env.local`.
+2. Jalankan isi `supabase/schema.sql` di Supabase SQL Editor. Untuk project yang sudah memiliki skema, jalankan `supabase/migrations/20261115000000_user_profiles.sql`.
+3. Isi `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` di `.env.local` dan environment variables deployment.
+4. Di Supabase Authentication > URL Configuration, atur Site URL ke URL aplikasi dan izinkan URL aplikasi lokal/deployment untuk redirect konfirmasi email.
+
+Supabase Auth menyimpan kredensial secara aman; tabel `public.profiles` menyimpan profil pembeli dan otomatis dibuat saat akun didaftarkan. Row Level Security membatasi pembeli ke profil miliknya sendiri.
 
 ---
 

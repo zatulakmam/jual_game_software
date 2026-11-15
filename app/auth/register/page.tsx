@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Eye, EyeOff, ShoppingBag, CheckCircle2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase';
 
 const registerSchema = z
   .object({
@@ -58,6 +60,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -68,19 +71,46 @@ export default function RegisterPage() {
 
   const passwordValue = watch('password', '');
 
-  const onSubmit = async (_data: RegisterForm) => {
+  const onSubmit = async (data: RegisterForm) => {
+    if (!isSupabaseConfigured) {
+      toast.error('Registrasi belum tersedia. Konfigurasi Supabase terlebih dahulu.');
+      return;
+    }
+
     setIsLoading(true);
-    await new Promise((r) => setTimeout(r, 1400));
-    setIsLoading(false);
-    toast.success('Account created! Welcome to PixelStore.', {
-      icon: '🎉',
-      style: {
-        border: '2px solid #171717',
-        boxShadow: '4px 4px 0px #171717',
-        fontFamily: "'Space Grotesk', sans-serif",
-        fontWeight: 700,
-      },
-    });
+    try {
+      const { data: authData, error } = await createClient().auth.signUp({
+        email: data.email.trim(),
+        password: data.password,
+        options: {
+          data: { name: data.name.trim() },
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+        },
+      });
+
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      if (authData.session) {
+        toast.success('Akun berhasil dibuat.');
+        router.replace('/dashboard');
+        router.refresh();
+        return;
+      }
+
+      if (authData.user) {
+        toast.success('Akun dibuat. Periksa email Anda untuk konfirmasi sebelum login.');
+        return;
+      }
+
+      toast.error('Registrasi belum berhasil. Silakan coba lagi.');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Terjadi kesalahan saat registrasi.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const inputStyle = (hasError: boolean): React.CSSProperties => ({
@@ -108,7 +138,6 @@ export default function RegisterPage() {
 
   return (
     <>
-      <Toaster position="top-right" />
       <div
         style={{
           minHeight: '100vh',
@@ -479,7 +508,7 @@ export default function RegisterPage() {
                 <p style={{ textAlign: 'center', fontSize: 15, fontWeight: 600, color: '#6B7280' }}>
                   Already have an account?{' '}
                   <Link
-                    href="/auth/login"
+                    href="/login"
                     style={{
                       color: '#171717',
                       fontWeight: 800,
