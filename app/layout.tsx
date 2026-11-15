@@ -5,16 +5,15 @@ import { Footer } from '@/components/layout/Footer';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: 'PixelStore – Digital Product Marketplace',
+  title: 'Sinzo Store – Game & Software Digital',
   description:
-    'Your Digital World Starts Here. Discover software licenses, PC games, productivity tools, and digital templates with instant delivery.',
+    'Temukan game, software, dan item digital di Sinzo Store. Cek informasi serta harga produk sebelum memilih.',
   keywords: [
-    'digital products',
-    'software license',
-    'pc games',
-    'developer tools',
-    'notion templates',
-    'neo-brutalism marketplace',
+    'produk digital',
+    'software',
+    'game PC',
+    'tools developer',
+    'template digital',
   ],
 };
 

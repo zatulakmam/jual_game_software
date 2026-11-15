@@ -4,9 +4,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Key, User as UserIcon, ShoppingBag } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { getUserDisplayName, useCurrentUser } from '@/lib/useCurrentUser';
 
 export default function UserDashboardPage() {
   const [activeTab, setActiveTab] = useState<'purchases' | 'orders' | 'profile'>('purchases');
+  const user = useCurrentUser();
+  const displayName = user ? getUserDisplayName(user) : '';
 
   return (
     <div className="min-h-screen bg-[#F5F0E8] py-10 px-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -15,7 +18,7 @@ export default function UserDashboardPage() {
         <div className="bg-[#171717] text-white p-6 sm:p-10 rounded-3xl border-[3px] border-[#171717] shadow-[6px_6px_0px_#F9ED32] mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             <div className="w-16 h-16 rounded-2xl bg-[#F9ED32] border-2 border-white text-[#171717] flex items-center justify-center font-black text-2xl shadow-[3px_3px_0px_#fff]">
-              U
+              {displayName.charAt(0).toUpperCase() || 'U'}
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -24,9 +27,11 @@ export default function UserDashboardPage() {
                 </span>
               </div>
               <h1 className="text-2xl sm:text-4xl font-black uppercase tracking-tight">
-                DASHBOARD PENGGUNA
+                {user ? `Halo, ${displayName}!` : 'Dashboard Pengguna'}
               </h1>
-              <p className="text-xs sm:text-sm text-gray-400 font-medium">Kelola pembelian dan data akun Anda.</p>
+              <p className="text-xs sm:text-sm text-gray-400 font-medium">
+                {user?.email ?? 'Kelola profil akun dan lihat aktivitas kamu di sini.'}
+              </p>
             </div>
           </div>
 
@@ -138,7 +143,7 @@ export default function UserDashboardPage() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                toast.success('Profil berhasil diperbarui!');
+                toast.error('Pengaturan profil belum terhubung ke penyimpanan akun.');
               }}
               className="space-y-4"
             >

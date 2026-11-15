@@ -2,18 +2,21 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Menu, X, ChevronDown, User, Search } from 'lucide-react';
+import { ShoppingCart, Menu, X, ChevronDown, User, Search, LogOut } from 'lucide-react';
 import SearchBar from '@/components/ui/SearchBar';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { createClient } from '@/lib/supabase';
+import { getUserDisplayName, useCurrentUser } from '@/lib/useCurrentUser';
 
 const CATEGORIES = [
-  { name: 'Software & Apps', slug: 'software' },
-  { name: 'PC Games', slug: 'games' },
-  { name: 'Productivity', slug: 'productivity' },
-  { name: 'Developer Tools', slug: 'developer' },
-  { name: 'Design Assets', slug: 'design' },
-  { name: 'Templates', slug: 'templates' },
-  { name: 'Utilities', slug: 'utilities' },
+  { name: 'Software', slug: 'software' },
+  { name: 'Game PC', slug: 'games' },
+  { name: 'Produktivitas', slug: 'productivity' },
+  { name: 'Tools Developer', slug: 'developer' },
+  { name: 'Aset Desain', slug: 'design' },
+  { name: 'Template', slug: 'templates' },
+  { name: 'Utilitas', slug: 'utilities' },
 ];
 
 export const Navbar: React.FC = () => {
@@ -23,6 +26,23 @@ export const Navbar: React.FC = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const categoryRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const user = useCurrentUser();
+  const userName = user ? getUserDisplayName(user) : '';
+
+  const handleSignOut = async () => {
+    try {
+      const { error } = await createClient().auth.signOut();
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+      setMobileOpen(false);
+      toast.success('Kamu sudah keluar dari akun.');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Gagal keluar dari akun.');
+    }
+  };
 
   // SSR-safe cart count from zustand
   useEffect(() => {
@@ -64,15 +84,16 @@ export const Navbar: React.FC = () => {
   const navLinkStyle: React.CSSProperties = {
     fontFamily: "'Space Grotesk', sans-serif",
     fontWeight: 700,
-    fontSize: '15px',
+    fontSize: '14px',
     color: '#171717',
     textDecoration: 'none',
-    padding: '6px 10px',
+    padding: '6px 8px',
     borderRadius: '6px',
     transition: 'background 0.15s',
     display: 'flex',
     alignItems: 'center',
     gap: 4,
+    whiteSpace: 'nowrap',
   };
 
   return (
@@ -95,7 +116,7 @@ export const Navbar: React.FC = () => {
             height: 64,
             display: 'flex',
             alignItems: 'center',
-            gap: 24,
+            gap: 12,
           }}
         >
           {/* Logo */}
@@ -116,17 +137,17 @@ export const Navbar: React.FC = () => {
                 color: '#171717',
               }}
             >
-              PS
+              SS
             </div>
             <span style={{ fontWeight: 900, fontSize: '20px', color: '#171717', letterSpacing: '-0.5px' }}>
-              PixelStore
+              Sinzo Store
             </span>
           </Link>
 
           {/* Desktop nav links */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }} className="hidden-mobile">
-            <Link href="/" style={navLinkStyle} className="nav-link">Home</Link>
-            <Link href="/explore" style={navLinkStyle} className="nav-link">Explore</Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 1, minWidth: 0 }} className="hidden-mobile">
+            <Link href="/" style={navLinkStyle} className="nav-link">Beranda</Link>
+            <Link href="/explore" style={navLinkStyle} className="nav-link">Jelajahi</Link>
 
             {/* Categories dropdown */}
             <div ref={categoryRef} style={{ position: 'relative' }}>
@@ -134,7 +155,7 @@ export const Navbar: React.FC = () => {
                 style={{ ...navLinkStyle, border: 'none', background: 'none', cursor: 'pointer' }}
                 onClick={() => setCategoryOpen((o) => !o)}
               >
-                Categories <ChevronDown size={16} style={{ transition: 'transform 0.2s', transform: categoryOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
+                Kategori <ChevronDown size={16} style={{ transition: 'transform 0.2s', transform: categoryOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
               </button>
               {categoryOpen && (
                 <div
@@ -177,12 +198,12 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            <Link href="/purchases" style={navLinkStyle} className="nav-link">My Purchases</Link>
+            <Link href="/purchases" style={navLinkStyle} className="nav-link">Pembelian Saya</Link>
           </div>
 
           {/* Search - desktop */}
-          <div style={{ flex: 1, maxWidth: 400, minWidth: 0 }} className="hidden-mobile">
-            <SearchBar placeholder="Search products..." onSearch={handleSearch} size="sm" />
+          <div style={{ flex: '1 1 180px', maxWidth: 320, minWidth: 160 }} className="hidden-mobile">
+            <SearchBar placeholder="Cari produk..." onSearch={handleSearch} size="sm" />
           </div>
 
           {/* Right side actions */}
@@ -192,7 +213,7 @@ export const Navbar: React.FC = () => {
               style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'none', color: '#171717' }}
               className="show-mobile"
               onClick={() => setSearchOpen((o) => !o)}
-              aria-label="Search"
+              aria-label="Cari produk"
             >
               <Search size={22} />
             </button>
@@ -240,41 +261,70 @@ export const Navbar: React.FC = () => {
               )}
             </Link>
 
-            {/* Auth buttons - desktop */}
-            <div style={{ display: 'flex', gap: 8 }} className="hidden-mobile">
-              <Link
-                href="/login"
-                style={{
-                  padding: '8px 16px',
-                  border: '2px solid #171717',
-                  borderRadius: '6px',
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontWeight: 700,
-                  fontSize: '14px',
-                  color: '#171717',
-                  textDecoration: 'none',
-                  backgroundColor: 'transparent',
-                }}
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                style={{
-                  padding: '8px 16px',
-                  border: '2px solid #171717',
-                  borderRadius: '6px',
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontWeight: 700,
-                  fontSize: '14px',
-                  color: '#171717',
-                  textDecoration: 'none',
-                  backgroundColor: '#F9ED32',
-                  boxShadow: '2px 2px 0px #171717',
-                }}
-              >
-                Register
-              </Link>
+            {/* Account actions - desktop */}
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }} className="hidden-mobile">
+              {user ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    title="Buka akun"
+                    style={{
+                      ...navLinkStyle,
+                      maxWidth: 150,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    <User size={17} />
+                    {userName}
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    aria-label="Keluar dari akun"
+                    title="Keluar"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#171717', display: 'flex' }}
+                  >
+                    <LogOut size={18} />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    style={{
+                      padding: '8px 16px',
+                      border: '2px solid #171717',
+                      borderRadius: '6px',
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      color: '#171717',
+                      textDecoration: 'none',
+                      backgroundColor: 'transparent',
+                    }}
+                  >
+                    Masuk
+                  </Link>
+                  <Link
+                    href="/register"
+                    style={{
+                      padding: '8px 16px',
+                      border: '2px solid #171717',
+                      borderRadius: '6px',
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      color: '#171717',
+                      textDecoration: 'none',
+                      backgroundColor: '#F9ED32',
+                      boxShadow: '2px 2px 0px #171717',
+                    }}
+                  >
+                    Daftar
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Hamburger - mobile */}
@@ -293,7 +343,7 @@ export const Navbar: React.FC = () => {
               }}
               className="show-mobile"
               onClick={() => setMobileOpen((o) => !o)}
-              aria-label="Toggle menu"
+              aria-label="Buka menu navigasi"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -303,7 +353,7 @@ export const Navbar: React.FC = () => {
         {/* Mobile search bar */}
         {searchOpen && (
           <div style={{ padding: '12px 24px', borderTop: '1px solid #E5E7EB' }} className="show-mobile">
-            <SearchBar placeholder="Search products..." onSearch={handleSearch} />
+            <SearchBar placeholder="Cari produk..." onSearch={handleSearch} />
           </div>
         )}
 
@@ -319,9 +369,9 @@ export const Navbar: React.FC = () => {
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {[
-                { label: 'Home', href: '/' },
-                { label: 'Explore', href: '/explore' },
-                { label: 'My Purchases', href: '/purchases' },
+                { label: 'Beranda', href: '/' },
+                { label: 'Jelajahi', href: '/explore' },
+                { label: 'Pembelian Saya', href: '/purchases' },
               ].map((link) => (
                 <Link
                   key={link.href}
@@ -341,7 +391,7 @@ export const Navbar: React.FC = () => {
                 </Link>
               ))}
               <div style={{ paddingTop: 8 }}>
-                <p style={{ fontWeight: 700, fontSize: '13px', color: '#6B7280', textTransform: 'uppercase', marginBottom: 8 }}>Categories</p>
+                <p style={{ fontWeight: 700, fontSize: '13px', color: '#6B7280', textTransform: 'uppercase', marginBottom: 8 }}>Kategori</p>
                 {CATEGORIES.map((cat) => (
                   <Link
                     key={cat.slug}
@@ -362,46 +412,66 @@ export const Navbar: React.FC = () => {
                   </Link>
                 ))}
               </div>
-              <div style={{ display: 'flex', gap: 12, paddingTop: 16 }}>
-                <Link
-                  href="/login"
-                  style={{
-                    flex: 1,
-                    textAlign: 'center',
-                    padding: '12px',
-                    border: '2px solid #171717',
-                    borderRadius: '6px',
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontWeight: 700,
-                    fontSize: '15px',
-                    color: '#171717',
-                    textDecoration: 'none',
-                  }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/register"
-                  style={{
-                    flex: 1,
-                    textAlign: 'center',
-                    padding: '12px',
-                    border: '2px solid #171717',
-                    borderRadius: '6px',
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontWeight: 700,
-                    fontSize: '15px',
-                    color: '#171717',
-                    textDecoration: 'none',
-                    backgroundColor: '#F9ED32',
-                    boxShadow: '2px 2px 0px #171717',
-                  }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Register
-                </Link>
-              </div>
+              {user ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingTop: 16 }}>
+                  <Link
+                    href="/dashboard"
+                    style={{ ...navLinkStyle, padding: '12px 0', borderBottom: '1px solid #E5E7EB' }}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <User size={18} />
+                    {userName}
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 0', border: 'none', background: 'none', color: '#171717', font: 'inherit', fontWeight: 700, cursor: 'pointer' }}
+                  >
+                    <LogOut size={18} />
+                    Keluar
+                  </button>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', gap: 12, paddingTop: 16 }}>
+                  <Link
+                    href="/login"
+                    style={{
+                      flex: 1,
+                      textAlign: 'center',
+                      padding: '12px',
+                      border: '2px solid #171717',
+                      borderRadius: '6px',
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontWeight: 700,
+                      fontSize: '15px',
+                      color: '#171717',
+                      textDecoration: 'none',
+                    }}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Masuk
+                  </Link>
+                  <Link
+                    href="/register"
+                    style={{
+                      flex: 1,
+                      textAlign: 'center',
+                      padding: '12px',
+                      border: '2px solid #171717',
+                      borderRadius: '6px',
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontWeight: 700,
+                      fontSize: '15px',
+                      color: '#171717',
+                      textDecoration: 'none',
+                      backgroundColor: '#F9ED32',
+                      boxShadow: '2px 2px 0px #171717',
+                    }}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Daftar
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -409,11 +479,11 @@ export const Navbar: React.FC = () => {
 
       {/* Responsive CSS */}
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 1100px) {
           .hidden-mobile { display: none !important; }
           .show-mobile { display: flex !important; }
         }
-        @media (min-width: 769px) {
+        @media (min-width: 1101px) {
           .show-mobile { display: none !important; }
           .hidden-mobile { display: flex !important; }
         }

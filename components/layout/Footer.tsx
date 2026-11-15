@@ -2,8 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Globe, MessageSquare, Terminal, Send } from 'lucide-react';
-
 const footerLinkStyle: React.CSSProperties = {
   display: 'block',
   color: '#D1D5DB',
@@ -57,31 +55,31 @@ export const Footer: React.FC = () => {
                   flexShrink: 0,
                 }}
               >
-                PS
+                SS
               </div>
               <span style={{ fontWeight: 900, fontSize: '20px', color: '#ffffff', letterSpacing: '-0.5px' }}>
-                PixelStore
+                Sinzo Store
               </span>
             </Link>
             <p style={{ fontSize: '14px', fontWeight: 500, color: '#9CA3AF', lineHeight: 1.7, maxWidth: 240 }}>
-              Your digital world, delivered instantly.
+              Tempat cari game, software, dan item digital.
             </p>
             <p style={{ fontSize: '13px', color: '#6B7280', marginTop: 16 }}>
-              The best place to buy digital products at unbeatable prices.
+              Cek detail dan harga produk sebelum memilih.
             </p>
           </div>
 
           {/* Product Categories */}
           <div>
-            <p style={headingStyle}>Product Categories</p>
+            <p style={headingStyle}>Kategori Produk</p>
             {[
-              { label: 'Software & Apps', href: '/categories/software' },
-              { label: 'PC Games', href: '/categories/games' },
-              { label: 'Productivity', href: '/categories/productivity' },
-              { label: 'Developer Tools', href: '/categories/developer' },
-              { label: 'Design Assets', href: '/categories/design' },
-              { label: 'Templates', href: '/categories/templates' },
-              { label: 'Utilities', href: '/categories/utilities' },
+              { label: 'Software & Aplikasi', href: '/categories/software' },
+              { label: 'Game PC', href: '/categories/games' },
+              { label: 'Produktivitas', href: '/categories/productivity' },
+              { label: 'Tools Developer', href: '/categories/developer' },
+              { label: 'Aset Desain', href: '/categories/design' },
+              { label: 'Template Digital', href: '/categories/templates' },
+              { label: 'Utilitas', href: '/categories/utilities' },
             ].map((link) => (
               <Link
                 key={link.href}
@@ -97,12 +95,12 @@ export const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <p style={headingStyle}>Quick Links</p>
+            <p style={headingStyle}>Jelajahi</p>
             {[
-              { label: 'Home', href: '/' },
-              { label: 'Explore Products', href: '/explore' },
-              { label: 'New Arrivals', href: '/explore?filter=new-arrival' },
-              { label: 'Best Sellers', href: '/explore?filter=best-seller' },
+              { label: 'Beranda', href: '/' },
+              { label: 'Semua Produk', href: '/products' },
+              { label: 'Kategori', href: '/categories' },
+              { label: 'Keranjang', href: '/cart' },
             ].map((link) => (
               <Link
                 key={link.href}
@@ -118,13 +116,13 @@ export const Footer: React.FC = () => {
 
           {/* Help Center */}
           <div>
-            <p style={headingStyle}>Help Center</p>
+            <p style={headingStyle}>Bantuan</p>
             {[
-              { label: 'FAQ', href: '/faq' },
-              { label: 'Contact Us', href: '/contact' },
-              { label: 'Terms & Conditions', href: '/terms' },
-              { label: 'Privacy Policy', href: '/privacy' },
-              { label: 'Refund Policy', href: '/refund-policy' },
+              { label: 'Tanya Jawab', href: '/faq' },
+              { label: 'Kontak', href: '/contact' },
+              { label: 'Syarat dan Ketentuan', href: '/terms' },
+              { label: 'Kebijakan Privasi', href: '/privacy' },
+              { label: 'Kebijakan Pengembalian', href: '/refund-policy' },
             ].map((link) => (
               <Link
                 key={link.href}
@@ -138,25 +136,20 @@ export const Footer: React.FC = () => {
             ))}
           </div>
 
-          {/* Connect */}
+          {/* Account */}
           <div>
-            <p style={headingStyle}>Connect</p>
+            <p style={headingStyle}>Akun</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
-                { label: 'Twitter / X', href: 'https://twitter.com', icon: <Send size={18} /> },
-                { label: 'Instagram', href: 'https://instagram.com', icon: <Globe size={18} /> },
-                { label: 'Discord', href: 'https://discord.com', icon: <MessageSquare size={18} /> },
-                { label: 'GitHub', href: 'https://github.com', icon: <Terminal size={18} /> },
-              ].map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                { label: 'Dashboard', href: '/dashboard' },
+                { label: 'Pembelian Saya', href: '/purchases' },
+              ].map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 10,
                     color: '#D1D5DB',
                     textDecoration: 'none',
                     fontWeight: 600,
@@ -166,9 +159,8 @@ export const Footer: React.FC = () => {
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#F9ED32'; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#D1D5DB'; }}
                 >
-                  {social.icon}
-                  {social.label}
-                </a>
+                  {link.label}
+                </Link>
               ))}
             </div>
           </div>
@@ -187,12 +179,12 @@ export const Footer: React.FC = () => {
           }}
         >
           <p style={{ fontSize: '13px', color: '#6B7280', margin: 0 }}>
-            Copyright © 2024 PixelStore. All rights reserved.
+            © Sinzo Store.
           </p>
           <div style={{ display: 'flex', gap: 24 }}>
-            <Link href="/terms" style={{ fontSize: '13px', color: '#6B7280', textDecoration: 'none' }}>Terms</Link>
-            <Link href="/privacy" style={{ fontSize: '13px', color: '#6B7280', textDecoration: 'none' }}>Privacy</Link>
-            <Link href="/refund-policy" style={{ fontSize: '13px', color: '#6B7280', textDecoration: 'none' }}>Refunds</Link>
+            <Link href="/terms" style={{ fontSize: '13px', color: '#6B7280', textDecoration: 'none' }}>Ketentuan</Link>
+            <Link href="/privacy" style={{ fontSize: '13px', color: '#6B7280', textDecoration: 'none' }}>Privasi</Link>
+            <Link href="/refund-policy" style={{ fontSize: '13px', color: '#6B7280', textDecoration: 'none' }}>Pengembalian</Link>
           </div>
         </div>
       </div>

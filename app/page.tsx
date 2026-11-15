@@ -5,23 +5,17 @@ import Link from 'next/link';
 import {
   ArrowRight,
   Sparkles,
-  Zap,
-  ShieldCheck,
-  CreditCard,
-  Headphones,
-  Flame,
-  CheckCircle2,
-  Download,
-  Star,
   Layers,
   ChevronRight,
 } from 'lucide-react';
 import { CATEGORIES, PRODUCTS } from '@/lib/data';
 import { ProductCard } from '@/components/products/ProductCard';
 import { CategoryCard } from '@/components/products/CategoryCard';
+import { useCurrentUser } from '@/lib/useCurrentUser';
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const user = useCurrentUser();
 
   const filteredProducts =
     selectedCategory === 'all'
@@ -53,25 +47,25 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F9ED32] border-2 border-[#171717] shadow-[3px_3px_0px_#171717] mb-6">
                 <Sparkles className="w-4 h-4 text-[#171717]" />
                 <span className="text-xs md:text-sm font-extrabold uppercase tracking-wider text-[#171717]">
-                  DIGITAL GOODS ONLY · INSTANT DELIVERY
+                  KATALOG GAME & SOFTWARE
                 </span>
               </div>
 
               {/* H1 Headline */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#171717] tracking-tight leading-[1.05] uppercase mb-6">
-                YOUR DIGITAL <br />
+                CARI ITEM <br />
                 <span className="relative inline-block">
                   <span className="relative z-10 px-2 bg-[#F9ED32] border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] rounded-lg -rotate-1 inline-block">
-                    WORLD STARTS
+                    DIGITAL FAVORITMU
                   </span>
                 </span>{' '}
                 <br />
-                HERE.
+                DI SINI.
               </h1>
 
               {/* Subheadline */}
               <p className="text-base sm:text-lg md:text-xl font-medium text-gray-800 max-w-xl mb-8 leading-relaxed">
-                Discover software, games, and digital essentials. Everything you need, all in one place with instant license activation and trusted guarantees.
+                Lagi cari game atau software? Cek katalog, lihat detail dan harganya, lalu pilih yang paling cocok buat kebutuhanmu.
               </p>
 
               {/* Action Buttons */}
@@ -80,7 +74,7 @@ export default function HomePage() {
                   href="/products"
                   className="flex items-center gap-2 px-7 py-4 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] text-base md:text-lg font-black rounded-xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover:shadow-[7px_7px_0px_#171717] hover:-translate-y-1 active:translate-x-0.5 active:translate-y-0.5 transition-all"
                 >
-                  <span>Explore Products</span>
+                  <span>Lihat Katalog</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
 
@@ -89,7 +83,7 @@ export default function HomePage() {
                   className="flex items-center gap-2 px-6 py-4 bg-white hover:bg-gray-100 text-[#171717] text-base md:text-lg font-black rounded-xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover:shadow-[7px_7px_0px_#171717] hover:-translate-y-1 active:translate-x-0.5 active:translate-y-0.5 transition-all"
                 >
                   <Layers className="w-5 h-5" />
-                  <span>Browse Categories</span>
+                  <span>Jelajahi Kategori</span>
                 </Link>
               </div>
 
@@ -99,19 +93,19 @@ export default function HomePage() {
                   <div className="w-6 h-6 rounded-full bg-[#55E6D1] border-2 border-[#171717] flex items-center justify-center font-black text-xs">
                     ✓
                   </div>
-                  <span className="text-xs md:text-sm font-bold text-[#171717]">100% Produk Legal</span>
+                  <span className="text-xs md:text-sm font-bold text-[#171717]">Pilihan game & software</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-[#A78BFA] border-2 border-[#171717] flex items-center justify-center font-black text-xs">
                     ⚡
                   </div>
-                  <span className="text-xs md:text-sm font-bold text-[#171717]">Pengiriman Otomatis</span>
+                  <span className="text-xs md:text-sm font-bold text-[#171717]">Detail produk tersedia</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-[#FF7547] border-2 border-[#171717] flex items-center justify-center font-black text-xs">
                     🛡️
                   </div>
-                  <span className="text-xs md:text-sm font-bold text-[#171717]">Garansi 30 Hari</span>
+                  <span className="text-xs md:text-sm font-bold text-[#171717]">Pembayaran belum aktif</span>
                 </div>
               </div>
             </div>
@@ -129,46 +123,42 @@ export default function HomePage() {
                       <div className="w-3.5 h-3.5 rounded-full bg-[#55E6D1] border border-[#171717]" />
                     </div>
                     <span className="text-xs font-black uppercase tracking-wider bg-[#A78BFA] px-2 py-0.5 rounded border border-[#171717]">
-                      PROMO SPESIAL
+                      PILIHAN KATALOG
                     </span>
                   </div>
 
                   {/* Product Highlight Banner */}
                   <div className="relative h-40 w-full rounded-xl border-2 border-[#171717] overflow-hidden mb-4 bg-gray-100">
                     <img
-                      src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&h=400&fit=crop"
-                      alt="Windows 11 Pro"
+                      src={PRODUCTS[0]?.cover_image ?? ''}
+                      alt={PRODUCTS[0]?.name ?? 'Produk digital'}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-3 left-3 bg-[#F9ED32] text-[#171717] text-xs font-black px-2.5 py-1 rounded border-2 border-[#171717] shadow-[2px_2px_0px_#171717]">
-                      🔥 TERLARIS
+                      PRODUK
                     </div>
                   </div>
 
                   {/* Card Body */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase text-gray-500">Software & OS</span>
-                      <div className="flex items-center gap-1 text-xs font-bold text-[#171717]">
-                        <Star className="w-3.5 h-3.5 fill-[#F9ED32] text-[#171717]" />
-                        <span>4.9 (1.2k+ reviews)</span>
-                      </div>
+                      <span className="text-xs font-bold uppercase text-gray-500">Game & software</span>
+                      <span className="text-xs font-bold text-[#171717]">Belum ada ulasan</span>
                     </div>
 
                     <h3 className="text-xl font-black text-[#171717]">
-                      Windows 11 Pro Retail License
+                      {PRODUCTS[0]?.name ?? 'Produk digital'}
                     </h3>
 
                     <div className="flex items-center justify-between pt-2">
-                      <div>
-                        <span className="text-xs text-gray-400 line-through mr-2 font-bold">Rp120.000</span>
-                        <span className="text-2xl font-black text-[#171717]">Rp85.000</span>
-                      </div>
+                      <span className="text-2xl font-black text-[#171717]">
+                        {PRODUCTS[0]?.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 })}
+                      </span>
                       <Link
-                        href="/products/windows-11-pro-license"
+                        href={PRODUCTS[0] ? `/products/${PRODUCTS[0].slug}` : '/products'}
                         className="px-4 py-2 bg-[#55E6D1] hover:bg-[#40d2be] text-[#171717] text-xs font-black rounded-lg border-2 border-[#171717] shadow-[3px_3px_0px_#171717] transition-all"
                       >
-                        Beli Sekarang
+                        Lihat Produk
                       </Link>
                     </div>
                   </div>
@@ -177,10 +167,10 @@ export default function HomePage() {
                 {/* Floating Badge 1 - Top Left */}
                 <div className="absolute -top-6 -left-6 bg-[#A78BFA] text-[#171717] p-3 rounded-xl border-2 border-[#171717] shadow-[4px_4px_0px_#171717] z-20 rotate-[-8deg] hidden sm:block">
                   <div className="flex items-center gap-2">
-                    <Download className="w-5 h-5" />
+                    <Layers className="w-5 h-5" />
                     <div>
-                      <p className="text-[10px] font-bold uppercase">Download Instan</p>
-                      <p className="text-xs font-black">Langsung Aktif</p>
+                      <p className="text-[10px] font-bold uppercase">Lihat katalog</p>
+                      <p className="text-xs font-black">Pilih produk</p>
                     </div>
                   </div>
                 </div>
@@ -188,10 +178,10 @@ export default function HomePage() {
                 {/* Floating Badge 2 - Bottom Right */}
                 <div className="absolute -bottom-6 -right-4 bg-[#55E6D1] text-[#171717] p-3 rounded-xl border-2 border-[#171717] shadow-[4px_4px_0px_#171717] z-20 rotate-[6deg]">
                   <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5" />
+                    <Sparkles className="w-5 h-5" />
                     <div>
-                      <p className="text-[10px] font-bold uppercase">Keamanan</p>
-                      <p className="text-xs font-black">100% Terverifikasi</p>
+                      <p className="text-[10px] font-bold uppercase">Info produk</p>
+                      <p className="text-xs font-black">Cek detail dulu</p>
                     </div>
                   </div>
                 </div>
@@ -206,19 +196,19 @@ export default function HomePage() {
         <div className="flex whitespace-nowrap animate-marquee">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="flex items-center gap-8 text-[#F9ED32] font-black text-sm md:text-base tracking-widest uppercase">
-              <span>SOFTWARE & APPS</span>
+              <span>SOFTWARE & APLIKASI</span>
               <span>✦</span>
-              <span>PC GAMES & STEAM</span>
+              <span>GAME PC</span>
               <span>✦</span>
-              <span>PRODUCTIVITY TOOLS</span>
+              <span>TOOLS PRODUKTIVITAS</span>
               <span>✦</span>
-              <span>NOTION TEMPLATES</span>
+              <span>TEMPLATE DIGITAL</span>
               <span>✦</span>
-              <span>DEVELOPER UTILITIES</span>
+              <span>TOOLS DEVELOPER</span>
               <span>✦</span>
-              <span>DESIGN ASSETS</span>
+              <span>ASET DESAIN</span>
               <span>✦</span>
-              <span>INSTANT DELIVERY 24/7</span>
+              <span>KATALOG SINZO STORE</span>
               <span>✦</span>
             </div>
           ))}
@@ -233,7 +223,7 @@ export default function HomePage() {
               KATEGORI PRODUK
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-[#171717] uppercase tracking-tight">
-              EXPLORE BY CATEGORY.
+              PILIH KATEGORI.
             </h2>
           </div>
           <Link
@@ -263,9 +253,9 @@ export default function HomePage() {
                 KATALOG UNGGULAN
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#171717] uppercase tracking-tight">
-                FRESH DROPS. <br className="hidden sm:inline" />
+                PILIHAN PRODUK. <br className="hidden sm:inline" />
                 <span className="bg-[#F9ED32] px-2 border-2 border-[#171717] shadow-[3px_3px_0px_#171717] rounded inline-block">
-                  DIGITAL GOODS.
+                  GAME & SOFTWARE.
                 </span>
               </h2>
             </div>
@@ -311,24 +301,24 @@ export default function HomePage() {
               href="/products"
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] text-base font-black rounded-xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover:shadow-[7px_7px_0px_#171717] hover:-translate-y-1 transition-all"
             >
-              <span>Jelajahi Seluruh Katalog ({PRODUCTS.length}+ Produk)</span>
+              <span>Jelajahi Seluruh Katalog ({PRODUCTS.length} Produk)</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ===================== WHY PIXELSTORE (FEATURES) ===================== */}
+      {/* ===================== TENTANG SINZO STORE ===================== */}
       <section className="py-16 md:py-24 px-4 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <div className="inline-block px-3 py-1 bg-[#A78BFA] text-[#171717] border-2 border-[#171717] shadow-[2px_2px_0px_#171717] rounded font-black text-xs uppercase mb-3">
-            MENGAPA PIXELSTORE?
+            TENTANG SINZO STORE
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#171717] uppercase tracking-tight mb-4">
-            TRANSAKSI CEPAT, AMAN, DAN TANPA RIBET.
+            CEK PRODUK SEBELUM MEMILIH.
           </h2>
           <p className="text-base text-gray-700 font-medium">
-            Platform modern yang dirancang khusus untuk kenyamanan transaksi produk digital Anda.
+            Informasi katalog tersedia di sini. Fitur pembayaran masih simulasi dan belum mencatat transaksi.
           </p>
         </div>
 
@@ -336,44 +326,44 @@ export default function HomePage() {
           {/* Feature 1 */}
           <div className="p-6 bg-white rounded-xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover:-translate-y-1 transition-all">
             <div className="w-14 h-14 rounded-xl bg-[#F9ED32] border-2 border-[#171717] shadow-[3px_3px_0px_#171717] flex items-center justify-center mb-5">
-              <Zap className="w-7 h-7 text-[#171717]" />
+              <Layers className="w-7 h-7 text-[#171717]" />
             </div>
-            <h3 className="font-black text-xl text-[#171717] mb-2">Instant Delivery</h3>
+            <h3 className="font-black text-xl text-[#171717] mb-2">Katalog Digital</h3>
             <p className="text-sm text-gray-700 leading-relaxed font-medium">
-              Akses file unduhan dan lisensi serial langsung terbuka otomatis setelah pembayaran terverifikasi.
+              Temukan pilihan game, software, dan item digital yang tersedia di katalog.
             </p>
           </div>
 
           {/* Feature 2 */}
           <div className="p-6 bg-white rounded-xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover:-translate-y-1 transition-all">
             <div className="w-14 h-14 rounded-xl bg-[#55E6D1] border-2 border-[#171717] shadow-[3px_3px_0px_#171717] flex items-center justify-center mb-5">
-              <ShieldCheck className="w-7 h-7 text-[#171717]" />
+              <Sparkles className="w-7 h-7 text-[#171717]" />
             </div>
-            <h3 className="font-black text-xl text-[#171717] mb-2">100% Genuine & Safe</h3>
+            <h3 className="font-black text-xl text-[#171717] mb-2">Cek Detail Produk</h3>
             <p className="text-sm text-gray-700 leading-relaxed font-medium">
-              Semua produk dicek dan diverifikasi legalitasnya. Bebas virus, malware, dan resiko keamanan.
+              Lihat keterangan dan harga produk sebelum menentukan pilihan.
             </p>
           </div>
 
           {/* Feature 3 */}
           <div className="p-6 bg-white rounded-xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover:-translate-y-1 transition-all">
             <div className="w-14 h-14 rounded-xl bg-[#FF7547] border-2 border-[#171717] shadow-[3px_3px_0px_#171717] flex items-center justify-center mb-5 text-white">
-              <CreditCard className="w-7 h-7 text-[#171717]" />
+              <Layers className="w-7 h-7 text-[#171717]" />
             </div>
-            <h3 className="font-black text-xl text-[#171717] mb-2">Metode Lokal</h3>
+            <h3 className="font-black text-xl text-[#171717] mb-2">Status Pembayaran</h3>
             <p className="text-sm text-gray-700 leading-relaxed font-medium">
-              Bayar mudah menggunakan QRIS (semua bank & e-wallet), BCA, Mandiri, BNI, GoPay, OVO, dan DANA.
+              Checkout masih simulasi. Belum ada pembayaran atau transaksi nyata yang tercatat.
             </p>
           </div>
 
           {/* Feature 4 */}
           <div className="p-6 bg-white rounded-xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover:-translate-y-1 transition-all">
             <div className="w-14 h-14 rounded-xl bg-[#A78BFA] border-2 border-[#171717] shadow-[3px_3px_0px_#171717] flex items-center justify-center mb-5">
-              <Headphones className="w-7 h-7 text-[#171717]" />
+              <Layers className="w-7 h-7 text-[#171717]" />
             </div>
-            <h3 className="font-black text-xl text-[#171717] mb-2">Dukungan 24/7</h3>
+            <h3 className="font-black text-xl text-[#171717] mb-2">Akun Pengguna</h3>
             <p className="text-sm text-gray-700 leading-relaxed font-medium">
-              Tim support siap membantu kendala instalasi lisensi dan aktivasi software Anda kapan pun dibutuhkan.
+              Nama akun akan tampil setelah masuk. Riwayat pembelian akan terisi saat transaksi nyata tersedia.
             </p>
           </div>
         </div>
@@ -384,28 +374,28 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="p-4 border-2 border-dashed border-gray-700 rounded-xl">
-              <p className="text-3xl md:text-5xl font-black text-[#F9ED32] mb-1">10.000+</p>
+              <p className="text-3xl md:text-5xl font-black text-[#F9ED32] mb-1">              {PRODUCTS.length}</p>
               <p className="text-xs md:text-sm font-bold uppercase tracking-wider text-gray-300">
-                Produk Terjual
+                Produk di Katalog
               </p>
             </div>
 
             <div className="p-4 border-2 border-dashed border-gray-700 rounded-xl">
-              <p className="text-3xl md:text-5xl font-black text-[#55E6D1] mb-1">5.000+</p>
+              <p className="text-3xl md:text-5xl font-black text-[#55E6D1] mb-1">              0</p>
               <p className="text-xs md:text-sm font-bold uppercase tracking-wider text-gray-300">
-                Pelanggan Puas
+                Transaksi Tercatat
               </p>
             </div>
 
             <div className="p-4 border-2 border-dashed border-gray-700 rounded-xl">
-              <p className="text-3xl md:text-5xl font-black text-[#FF7547] mb-1">99.9%</p>
+              <p className="text-3xl md:text-5xl font-black text-[#FF7547] mb-1">              0</p>
               <p className="text-xs md:text-sm font-bold uppercase tracking-wider text-gray-300">
-                Aktivasi Berhasil
+                Ulasan Pelanggan
               </p>
             </div>
 
             <div className="p-4 border-2 border-dashed border-gray-700 rounded-xl">
-              <p className="text-3xl md:text-5xl font-black text-[#A78BFA] mb-1">7+</p>
+              <p className="text-3xl md:text-5xl font-black text-[#A78BFA] mb-1">              {CATEGORIES.length}</p>
               <p className="text-xs md:text-sm font-bold uppercase tracking-wider text-gray-300">
                 Kategori Digital
               </p>
@@ -422,10 +412,10 @@ export default function HomePage() {
               SIAP MEMULAI?
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#171717] uppercase tracking-tight mb-6">
-              UPGRADE PERANGKAT DIGITALMU SEKARANG.
+              CARI ITEM DIGITAL FAVORITMU.
             </h2>
             <p className="text-base sm:text-lg text-[#171717] font-medium max-w-2xl mx-auto mb-8">
-              Dapatkan lisensi original, tool produktivitas terkini, dan game favorit dengan harga terbaik serta proteksi garansi penuh.
+              Jelajahi katalog game dan software. Pastikan kamu membaca detail produk sebelum memilih.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
@@ -435,10 +425,10 @@ export default function HomePage() {
                 Buka Katalog Lengkap
               </Link>
               <Link
-                href="/auth/register"
+                href={user ? '/dashboard' : '/register'}
                 className="px-8 py-4 bg-white hover:bg-gray-100 text-[#171717] font-black text-base rounded-xl border-2 border-[#171717] shadow-[4px_4px_0px_#171717] hover:-translate-y-1 transition-all"
               >
-                Buat Akun Gratis
+                {user ? 'Buka Dashboard' : 'Buat Akun Gratis'}
               </Link>
             </div>
           </div>

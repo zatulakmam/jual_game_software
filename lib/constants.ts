@@ -1,5 +1,5 @@
-export const SITE_NAME = 'PixelStore'
-export const SITE_DESCRIPTION = 'Your Digital World Starts Here.'
+export const SITE_NAME = 'Sinzo Store'
+export const SITE_DESCRIPTION = 'Tempat cari game, software, dan item digital.'
 
 export const PAYMENT_METHODS = [
   { id: 'bca', name: 'BCA Transfer', icon: '🏦', type: 'bank' },
@@ -20,34 +20,34 @@ export const ORDER_STATUSES = {
 } as const
 
 export const NAV_LINKS = [
-  { label: 'Home', href: '/' },
-  { label: 'Explore Products', href: '/explore' },
-  { label: 'Categories', href: '/categories', hasDropdown: true },
-  { label: 'My Purchases', href: '/purchases' },
+  { label: 'Beranda', href: '/' },
+  { label: 'Jelajahi Produk', href: '/explore' },
+  { label: 'Kategori', href: '/categories', hasDropdown: true },
+  { label: 'Pembelian Saya', href: '/purchases' },
 ] as const
 
 export const FOOTER_LINKS = {
   categories: [
-    { label: 'Software & Apps', href: '/categories/software' },
-    { label: 'PC Games', href: '/categories/games' },
-    { label: 'Productivity', href: '/categories/productivity' },
-    { label: 'Developer Tools', href: '/categories/developer' },
-    { label: 'Design Assets', href: '/categories/design' },
-    { label: 'Templates', href: '/categories/templates' },
-    { label: 'Utilities', href: '/categories/utilities' },
+    { label: 'Software & Aplikasi', href: '/categories/software' },
+    { label: 'Game PC', href: '/categories/games' },
+    { label: 'Produktivitas', href: '/categories/productivity' },
+    { label: 'Tools Developer', href: '/categories/developer' },
+    { label: 'Aset Desain', href: '/categories/design' },
+    { label: 'Template Digital', href: '/categories/templates' },
+    { label: 'Utilitas', href: '/categories/utilities' },
   ],
   quickLinks: [
-    { label: 'Home', href: '/' },
-    { label: 'Explore Products', href: '/explore' },
-    { label: 'New Arrivals', href: '/explore?badge=new-arrival' },
-    { label: 'Best Sellers', href: '/explore?badge=best-seller' },
+    { label: 'Beranda', href: '/' },
+    { label: 'Semua Produk', href: '/products' },
+    { label: 'Kategori', href: '/categories' },
+    { label: 'Keranjang', href: '/cart' },
   ],
   helpCenter: [
-    { label: 'FAQ', href: '/faq' },
-    { label: 'Contact Us', href: '/contact' },
-    { label: 'Terms & Conditions', href: '/terms' },
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Refund Policy', href: '/refund' },
+    { label: 'Tanya Jawab', href: '/faq' },
+    { label: 'Kontak', href: '/contact' },
+    { label: 'Syarat dan Ketentuan', href: '/terms' },
+    { label: 'Kebijakan Privasi', href: '/privacy' },
+    { label: 'Kebijakan Pengembalian', href: '/refund-policy' },
   ],
 }
 

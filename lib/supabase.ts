@@ -15,7 +15,7 @@ const supabaseAnonKey = configuredAnonKey || 'placeholder_key'
 
 if (!isSupabaseConfigured && process.env.NODE_ENV !== 'test') {
   console.warn(
-    '[PixelStore] Supabase not configured. Using placeholder values. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local'
+    '[Sinzo Store] Supabase belum dikonfigurasi. Atur NEXT_PUBLIC_SUPABASE_URL dan NEXT_PUBLIC_SUPABASE_ANON_KEY di .env.local.'
   )
 }
 

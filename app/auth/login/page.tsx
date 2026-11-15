@@ -9,10 +9,11 @@ import toast from 'react-hot-toast';
 import { Eye, EyeOff, Star, Zap, ShoppingBag } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { createClient, isSupabaseConfigured } from '@/lib/supabase';
+import { CATEGORIES, PRODUCTS } from '@/lib/data';
 
 const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(1, 'Password is required'),
+  email: z.string().email('Masukkan alamat email yang valid.'),
+  password: z.string().min(1, 'Kata sandi wajib diisi.'),
 });
 
 type LoginForm = z.infer<typeof loginSchema>;
@@ -141,7 +142,7 @@ export default function LoginPage() {
                 <ShoppingBag size={26} color="#171717" />
               </div>
               <span style={{ fontSize: 28, fontWeight: 900, color: '#ffffff', letterSpacing: -1 }}>
-                PixelStore
+                Sinzo Store
               </span>
             </div>
           </div>
@@ -204,14 +205,14 @@ export default function LoginPage() {
                 letterSpacing: -2,
               }}
             >
-              Your Digital
+              Game & Software
               <br />
-              <span style={{ color: '#F9ED32' }}>World Starts</span>
+              <span style={{ color: '#F9ED32' }}>Pilihanmu</span>
               <br />
-              Here. ✦
+              Ada di Sini. ✦
             </h1>
             <p style={{ fontSize: 18, color: '#9CA3AF', fontWeight: 500, lineHeight: 1.6, maxWidth: 400 }}>
-              Join thousands of users getting premium software, games, and digital tools at the best prices.
+              Masuk untuk mengelola akun dan melihat aktivitasmu di Sinzo Store.
             </p>
 
             {/* Star decorations */}
@@ -225,9 +226,9 @@ export default function LoginPage() {
           {/* Bottom stats */}
           <div style={{ display: 'flex', gap: 32 }}>
             {[
-              { value: '50K+', label: 'Happy Users' },
-              { value: '1200+', label: 'Products' },
-              { value: '99%', label: 'Satisfaction' },
+              { value: PRODUCTS.length, label: 'Produk di katalog' },
+              { value: CATEGORIES.length, label: 'Kategori' },
+              { value: '0', label: 'Transaksi tercatat' },
             ].map((stat) => (
               <div key={stat.label}>
                 <div style={{ fontSize: 24, fontWeight: 900, color: '#F9ED32' }}>{stat.value}</div>
@@ -264,7 +265,7 @@ export default function LoginPage() {
               >
                 <ShoppingBag size={22} color="#171717" />
               </div>
-              <span style={{ fontSize: 22, fontWeight: 900, color: '#171717' }}>PixelStore</span>
+              <span style={{ fontSize: 22, fontWeight: 900, color: '#171717' }}>Sinzo Store</span>
             </div>
 
             {/* Form card */}
@@ -279,10 +280,10 @@ export default function LoginPage() {
             >
               <div style={{ marginBottom: 32 }}>
                 <h2 style={{ fontSize: 28, fontWeight: 900, color: '#171717', marginBottom: 8 }}>
-                  Welcome back! 👋
+                  Balik lagi! 👋
                 </h2>
                 <p style={{ fontSize: 15, color: '#6B7280', fontWeight: 500 }}>
-                  Sign in to your PixelStore account
+                  Masuk ke akun Sinzo Store
                 </p>
               </div>
 
@@ -298,7 +299,7 @@ export default function LoginPage() {
                       color: '#171717',
                     }}
                   >
-                    Email Address <span style={{ color: '#EF4444' }}>*</span>
+                    Alamat Email <span style={{ color: '#EF4444' }}>*</span>
                   </label>
                   <input
                     {...register('email')}
@@ -330,20 +331,20 @@ export default function LoginPage() {
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                     <label style={{ fontSize: 14, fontWeight: 700, color: '#171717' }}>
-                      Password <span style={{ color: '#EF4444' }}>*</span>
+                      Kata Sandi <span style={{ color: '#EF4444' }}>*</span>
                     </label>
                     <Link
                       href="/auth/forgot-password"
                       style={{ fontSize: 13, fontWeight: 700, color: '#A78BFA', textDecoration: 'none' }}
                     >
-                      Forgot password?
+                      Lupa kata sandi?
                     </Link>
                   </div>
                   <div style={{ position: 'relative' }}>
                     <input
                       {...register('password')}
                       type={showPassword ? 'text' : 'password'}
-                      placeholder="Your password"
+                      placeholder="Masukkan kata sandi"
                       style={{
                         width: '100%',
                         padding: '11px 44px 11px 14px',
@@ -414,23 +415,23 @@ export default function LoginPage() {
                         <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
                         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="30 60" strokeLinecap="round" />
                       </svg>
-                      Signing in...
+                      Sedang masuk...
                     </>
                   ) : (
-                    'Sign In'
+                    'Masuk'
                   )}
                 </button>
 
                 {/* Divider */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <div style={{ flex: 1, height: 2, backgroundColor: '#E5E7EB' }} />
-                  <span style={{ fontSize: 13, fontWeight: 700, color: '#9CA3AF' }}>or</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: '#9CA3AF' }}>atau</span>
                   <div style={{ flex: 1, height: 2, backgroundColor: '#E5E7EB' }} />
                 </div>
 
                 {/* Register link */}
                 <p style={{ textAlign: 'center', fontSize: 15, fontWeight: 600, color: '#6B7280' }}>
-                  Don&apos;t have an account?{' '}
+                  Belum punya akun?{' '}
                   <Link
                     href="/register"
                     style={{
@@ -440,7 +441,7 @@ export default function LoginPage() {
                       borderBottom: '2px solid #F9ED32',
                     }}
                   >
-                    Create an account →
+                    Daftar sekarang →
                   </Link>
                 </p>
               </form>

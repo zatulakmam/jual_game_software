@@ -12,14 +12,14 @@ import { createClient, isSupabaseConfigured } from '@/lib/supabase';
 
 const registerSchema = z
   .object({
-    name: z.string().min(2, 'Name must be at least 2 characters'),
-    email: z.string().email('Please enter a valid email address'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    confirmPassword: z.string().min(1, 'Please confirm your password'),
-    terms: z.boolean().refine((v) => v === true, 'You must accept the Terms & Conditions'),
+    name: z.string().min(2, 'Nama harus terdiri dari minimal 2 karakter.'),
+    email: z.string().email('Masukkan alamat email yang valid.'),
+    password: z.string().min(8, 'Kata sandi harus terdiri dari minimal 8 karakter.'),
+    confirmPassword: z.string().min(1, 'Konfirmasi kata sandi terlebih dahulu.'),
+    terms: z.boolean().refine((v) => v === true, 'Kamu harus menyetujui Syarat dan Ketentuan.'),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'Kata sandi tidak sama.',
     path: ['confirmPassword'],
   });
 
@@ -29,7 +29,7 @@ function PasswordStrength({ password }: { password: string }) {
   const len = password.length;
   const strength = len === 0 ? 0 : len < 6 ? 1 : len < 8 ? 2 : len < 12 ? 3 : 4;
   const colors = ['#E5E7EB', '#EF4444', '#FF7547', '#F9ED32', '#22C55E'];
-  const labels = ['', 'Too short', 'Weak', 'Good', 'Strong'];
+  const labels = ['', 'Terlalu pendek', 'Lemah', 'Cukup', 'Kuat'];
 
   return (
     <div style={{ marginTop: 8 }}>
@@ -217,7 +217,7 @@ export default function RegisterPage() {
               <ShoppingBag size={26} color="#171717" />
             </div>
             <span style={{ fontSize: 28, fontWeight: 900, color: '#ffffff', letterSpacing: -1 }}>
-              PixelStore
+              Sinzo Store
             </span>
           </div>
 
@@ -233,22 +233,22 @@ export default function RegisterPage() {
                 letterSpacing: -2,
               }}
             >
-              Join the
+              Gabung di
               <br />
-              <span style={{ color: '#55E6D1' }}>Digital</span>
+              <span style={{ color: '#55E6D1' }}>Sinzo</span>
               <br />
-              Revolution ⚡
+              Store ⚡
             </h1>
             <p style={{ fontSize: 17, color: '#9CA3AF', fontWeight: 500, lineHeight: 1.6, maxWidth: 380 }}>
-              Create your account and get instant access to thousands of premium digital products.
+              Buat akun untuk mengelola profil dan melihat aktivitasmu di Sinzo Store.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 36 }}>
               {[
-                'Instant digital delivery',
-                'Secure payment methods',
-                '24/7 customer support',
-                'Genuine license keys',
+                'Jelajahi katalog game dan software',
+                'Cek detail serta harga produk',
+                'Kelola nama akun dan email',
+                'Riwayat transaksi akan tersedia setelah sistem pembayaran aktif',
               ].map((item) => (
                 <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <CheckCircle2 size={20} color="#55E6D1" />
@@ -296,7 +296,7 @@ export default function RegisterPage() {
               >
                 <ShoppingBag size={22} color="#171717" />
               </div>
-              <span style={{ fontSize: 22, fontWeight: 900, color: '#171717' }}>PixelStore</span>
+              <span style={{ fontSize: 22, fontWeight: 900, color: '#171717' }}>Sinzo Store</span>
             </div>
 
             {/* Form card */}
@@ -311,10 +311,10 @@ export default function RegisterPage() {
             >
               <div style={{ marginBottom: 28 }}>
                 <h2 style={{ fontSize: 26, fontWeight: 900, color: '#171717', marginBottom: 6 }}>
-                  Create account 🚀
+                  Buat akun 🚀
                 </h2>
                 <p style={{ fontSize: 14, color: '#6B7280', fontWeight: 500 }}>
-                  Fill in your details to get started
+                  Isi data berikut untuk mulai
                 </p>
               </div>
 
@@ -322,7 +322,7 @@ export default function RegisterPage() {
                 {/* Full Name */}
                 <div>
                   <label style={labelStyle}>
-                    Full Name <span style={{ color: '#EF4444' }}>*</span>
+                    Nama Lengkap <span style={{ color: '#EF4444' }}>*</span>
                   </label>
                   <input
                     {...register('name')}
@@ -340,7 +340,7 @@ export default function RegisterPage() {
                 {/* Email */}
                 <div>
                   <label style={labelStyle}>
-                    Email Address <span style={{ color: '#EF4444' }}>*</span>
+                    Alamat Email <span style={{ color: '#EF4444' }}>*</span>
                   </label>
                   <input
                     {...register('email')}
@@ -358,13 +358,13 @@ export default function RegisterPage() {
                 {/* Password */}
                 <div>
                   <label style={labelStyle}>
-                    Password <span style={{ color: '#EF4444' }}>*</span>
+                    Kata Sandi <span style={{ color: '#EF4444' }}>*</span>
                   </label>
                   <div style={{ position: 'relative' }}>
                     <input
                       {...register('password')}
                       type={showPassword ? 'text' : 'password'}
-                      placeholder="Min. 8 characters"
+                      placeholder="Minimal 8 karakter"
                       style={{ ...inputStyle(!!errors.password), paddingRight: 44 }}
                     />
                     <button
@@ -397,13 +397,13 @@ export default function RegisterPage() {
                 {/* Confirm Password */}
                 <div>
                   <label style={labelStyle}>
-                    Confirm Password <span style={{ color: '#EF4444' }}>*</span>
+                    Konfirmasi Kata Sandi <span style={{ color: '#EF4444' }}>*</span>
                   </label>
                   <div style={{ position: 'relative' }}>
                     <input
                       {...register('confirmPassword')}
                       type={showConfirm ? 'text' : 'password'}
-                      placeholder="Repeat your password"
+                      placeholder="Ulangi kata sandi"
                       style={{ ...inputStyle(!!errors.confirmPassword), paddingRight: 44 }}
                     />
                     <button
@@ -455,13 +455,13 @@ export default function RegisterPage() {
                       }}
                     />
                     <span style={{ fontSize: 13, fontWeight: 500, color: '#374151', lineHeight: 1.5 }}>
-                      I agree to the{' '}
+                      Saya menyetujui{' '}
                       <Link href="/terms" style={{ fontWeight: 700, color: '#171717', textDecoration: 'underline' }}>
-                        Terms & Conditions
+                        Syarat dan Ketentuan
                       </Link>{' '}
-                      and{' '}
+                      dan{' '}
                       <Link href="/privacy" style={{ fontWeight: 700, color: '#171717', textDecoration: 'underline' }}>
-                        Privacy Policy
+                        Kebijakan Privasi
                       </Link>
                     </span>
                   </label>
@@ -500,16 +500,16 @@ export default function RegisterPage() {
                         <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
                         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="30 60" strokeLinecap="round" />
                       </svg>
-                      Creating account...
+                      Membuat akun...
                     </>
                   ) : (
-                    'Create Account 🚀'
+                    'Daftar 🚀'
                   )}
                 </button>
 
                 {/* Login link */}
                 <p style={{ textAlign: 'center', fontSize: 15, fontWeight: 600, color: '#6B7280' }}>
-                  Already have an account?{' '}
+                  Sudah punya akun?{' '}
                   <Link
                     href="/login"
                     style={{
@@ -519,7 +519,7 @@ export default function RegisterPage() {
                       borderBottom: '2px solid #F9ED32',
                     }}
                   >
-                    Sign in →
+                    Masuk →
                   </Link>
                 </p>
               </form>

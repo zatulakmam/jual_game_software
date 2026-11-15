@@ -19,12 +19,12 @@ import {
 
 const NAV_LINKS = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/products', label: 'Products', icon: Package },
-  { href: '/admin/categories', label: 'Categories', icon: Grid },
-  { href: '/admin/orders', label: 'Orders', icon: ShoppingBag },
-  { href: '/admin/customers', label: 'Customers', icon: Users },
-  { href: '/admin/vouchers', label: 'Vouchers', icon: Tag },
-  { href: '/admin/settings', label: 'Settings', icon: Settings },
+  { href: '/admin/products', label: 'Produk', icon: Package },
+  { href: '/admin/categories', label: 'Kategori', icon: Grid },
+  { href: '/admin/orders', label: 'Pesanan', icon: ShoppingBag },
+  { href: '/admin/customers', label: 'Pelanggan', icon: Users },
+  { href: '/admin/vouchers', label: 'Voucher', icon: Tag },
+  { href: '/admin/settings', label: 'Pengaturan', icon: Settings },
 ]
 
 function Sidebar({ onClose }: { onClose?: () => void }) {
@@ -47,7 +47,7 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
           <span
             style={{ color: '#F9ED32', fontWeight: 800, fontSize: '18px', letterSpacing: '-0.5px' }}
           >
-            PIXEL<span style={{ color: '#fff' }}>STORE</span>
+            SINZO<span style={{ color: '#fff' }}> STORE</span>
           </span>
         </Link>
         {onClose && (
@@ -117,7 +117,7 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
           }}
         >
           <LogOut size={18} color="#f87171" />
-          Logout
+          Keluar
         </button>
       </div>
     </div>
@@ -168,10 +168,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               marginBottom: '8px',
             }}
           >
-            ACCESS DENIED
+            AKSES DITOLAK
           </h1>
           <p style={{ color: '#6b7280', marginBottom: '24px' }}>
-            You do not have permission to access the admin panel.
+            Kamu tidak memiliki izin untuk membuka panel admin.
           </p>
           <Link
             href="/"
@@ -187,7 +187,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               textDecoration: 'none',
             }}
           >
-            Go Home
+            Ke Beranda
           </Link>
         </div>
       </div>
@@ -239,7 +239,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             justifyContent: 'space-between',
           }}
         >
-          <span style={{ color: '#F9ED32', fontWeight: 800, fontSize: '16px' }}>PIXELSTORE</span>
+          <span style={{ color: '#F9ED32', fontWeight: 800, fontSize: '16px' }}>SINZO STORE</span>
           <button
             onClick={() => setMobileSidebarOpen(true)}
             className="lg:hidden"

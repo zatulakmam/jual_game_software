@@ -134,7 +134,7 @@ export default function AdminProductsPage() {
         category_id: formCategory,
         images: [formImage],
         cover_image: formImage,
-        features: ['Lisensi Original', 'Support 24/7', 'Aktivasi Instan'],
+        features: ['Detail produk tersedia di katalog'],
         platform: formPlatform.split(',').map((s) => s.trim()),
         compatibility: 'Windows / Mac / Modern OS',
         license_type: formLicense,

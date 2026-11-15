@@ -12,7 +12,7 @@ export default function NotFound() {
           HALAMAN HILANG!
         </h1>
         <p className="text-sm text-gray-600 font-semibold mb-8">
-          Halaman atau produk digital yang kamu tuju tidak ditemukan di server PixelStore.
+          Halaman atau produk digital yang kamu cari tidak ditemukan di Sinzo Store.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link

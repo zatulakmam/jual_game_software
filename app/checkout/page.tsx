@@ -13,7 +13,6 @@ import {
   ArrowRight,
   ArrowLeft,
   Copy,
-  Download,
   AlertCircle,
   Sparkles,
 } from 'lucide-react';
@@ -93,7 +92,7 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
 
-    // Simulate instant secure transaction processing
+    // This only completes the local checkout simulation.
     setTimeout(() => {
       const orderId = `PS-${Math.floor(100000 + Math.random() * 900000)}`;
       setConfirmedOrder({
@@ -185,7 +184,7 @@ export default function CheckoutPage() {
                         className="w-full px-4 py-2.5 bg-[#F5F0E8] border-2 border-[#171717] rounded-xl text-xs font-bold text-[#171717] focus:outline-none"
                       />
                       <p className="text-[10px] text-gray-500 font-bold mt-1">
-                        *Kode lisensi atau link unduhan akan dikirimkan ke email ini.
+                        Email ini hanya untuk simulasi; tidak ada lisensi atau tautan unduhan yang dikirim.
                       </p>
                     </div>
 
@@ -211,7 +210,7 @@ export default function CheckoutPage() {
                       2
                     </div>
                     <h2 className="text-lg font-black uppercase text-[#171717]">
-                      Pilih Metode Pembayaran
+                      Pilih Opsi Simulasi
                     </h2>
                   </div>
 
@@ -250,7 +249,7 @@ export default function CheckoutPage() {
                         <Building2 className="w-6 h-6 text-[#171717]" />
                         <div>
                           <p className="text-xs font-black text-[#171717]">BCA Virtual Account</p>
-                          <p className="text-[10px] font-bold text-gray-600">Verifikasi instan 24 jam</p>
+                          <p className="text-[10px] font-bold text-gray-600">Simulasi pembayaran</p>
                         </div>
                       </div>
                     </label>
@@ -268,7 +267,7 @@ export default function CheckoutPage() {
                         <Building2 className="w-6 h-6 text-[#171717]" />
                         <div>
                           <p className="text-xs font-black text-[#171717]">Mandiri Virtual Account</p>
-                          <p className="text-[10px] font-bold text-gray-600">Verifikasi instan 24 jam</p>
+                          <p className="text-[10px] font-bold text-gray-600">Simulasi pembayaran</p>
                         </div>
                       </div>
                     </label>
@@ -286,7 +285,7 @@ export default function CheckoutPage() {
                         <Wallet className="w-6 h-6 text-[#171717]" />
                         <div>
                           <p className="text-xs font-black text-[#171717]">GoPay / GoPay Later</p>
-                          <p className="text-[10px] font-bold text-gray-600">Direct app deep link</p>
+                          <p className="text-[10px] font-bold text-gray-600">Simulasi pembayaran</p>
                         </div>
                       </div>
                     </label>
@@ -360,14 +359,14 @@ export default function CheckoutPage() {
                       </div>
                     ) : (
                       <>
-                        <span>Bayar Sekarang ({formatPrice(total)})</span>
+                        <span>Lanjutkan Simulasi ({formatPrice(total)})</span>
                         <ArrowRight className="w-5 h-5" />
                       </>
                     )}
                   </button>
 
                   <div className="text-[11px] text-gray-500 text-center font-medium">
-                    Dengan menekan tombol di atas, kamu menyetujui Ketentuan Layanan PixelStore.
+                    Dengan menekan tombol di atas, kamu menyetujui Ketentuan Layanan Sinzo Store.
                   </div>
                 </div>
               </div>
@@ -423,8 +422,8 @@ export default function CheckoutPage() {
                   href="/dashboard"
                   className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] font-black text-sm rounded-xl border-[3px] border-[#171717] shadow-[4px_4px_0px_#171717] uppercase tracking-wider"
                 >
-                  <Download className="w-4 h-4" />
-                  <span>Akses di My Purchases</span>
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Kembali ke Dashboard</span>
                 </Link>
 
                 <Link

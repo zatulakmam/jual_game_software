@@ -9,7 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Mail, ArrowLeft, ShoppingBag, Send, CheckCircle } from 'lucide-react';
 
 const forgotSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
+  email: z.string().email('Masukkan alamat email yang valid.'),
 });
 
 type ForgotForm = z.infer<typeof forgotSchema>;
@@ -31,7 +31,7 @@ export default function ForgotPasswordPage() {
     setIsLoading(false);
     setSubmittedEmail(data.email);
     setSubmitted(true);
-    toast.success('Reset link sent! Check your inbox.', {
+    toast.success('Permintaan reset kata sandi berhasil dikirim (simulasi).', {
       style: {
         border: '2px solid #171717',
         boxShadow: '4px 4px 0px #171717',
@@ -82,7 +82,7 @@ export default function ForgotPasswordPage() {
           >
             <ShoppingBag size={24} color="#171717" />
           </div>
-          <span style={{ fontSize: 24, fontWeight: 900, color: '#171717' }}>PixelStore</span>
+          <span style={{ fontSize: 24, fontWeight: 900, color: '#171717' }}>Sinzo Store</span>
         </Link>
 
         <div
@@ -117,10 +117,10 @@ export default function ForgotPasswordPage() {
               </div>
 
               <h1 style={{ fontSize: 28, fontWeight: 900, color: '#171717', marginBottom: 8 }}>
-                Forgot your password?
+                Lupa kata sandi?
               </h1>
               <p style={{ fontSize: 15, color: '#6B7280', fontWeight: 500, marginBottom: 32, lineHeight: 1.6 }}>
-                No worries! Enter your email and we&apos;ll send you a link to reset your password.
+                Masukkan alamat email akunmu untuk meminta tautan reset kata sandi.
               </p>
 
               <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -134,7 +134,7 @@ export default function ForgotPasswordPage() {
                       color: '#171717',
                     }}
                   >
-                    Email Address <span style={{ color: '#EF4444' }}>*</span>
+                    Alamat Email <span style={{ color: '#EF4444' }}>*</span>
                   </label>
                   <input
                     {...register('email')}
@@ -189,12 +189,12 @@ export default function ForgotPasswordPage() {
                         <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
                         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="30 60" strokeLinecap="round" />
                       </svg>
-                      Sending...
+                      Mengirim...
                     </>
                   ) : (
                     <>
                       <Send size={18} />
-                      Send Reset Link
+                      Kirim Permintaan Reset
                     </>
                   )}
                 </button>
@@ -240,10 +240,10 @@ export default function ForgotPasswordPage() {
               </div>
 
               <h2 style={{ fontSize: 26, fontWeight: 900, color: '#171717', marginBottom: 12 }}>
-                Check your email! 📬
+                Cek email kamu! 📬
               </h2>
               <p style={{ fontSize: 15, color: '#6B7280', fontWeight: 500, lineHeight: 1.6, marginBottom: 8 }}>
-                We&apos;ve sent a password reset link to:
+                Permintaan reset kata sandi (simulasi) untuk:
               </p>
               <div
                 style={{
@@ -261,7 +261,7 @@ export default function ForgotPasswordPage() {
                 {submittedEmail}
               </div>
               <p style={{ fontSize: 13, color: '#9CA3AF', fontWeight: 500, marginBottom: 32 }}>
-                Didn&apos;t receive it? Check your spam folder or{' '}
+                Belum menerima email? Cek folder spam atau{' '}
                 <button
                   onClick={() => setSubmitted(false)}
                   style={{
@@ -276,7 +276,7 @@ export default function ForgotPasswordPage() {
                     padding: 0,
                   }}
                 >
-                  try again
+                  coba lagi
                 </button>
               </p>
             </div>
@@ -297,7 +297,7 @@ export default function ForgotPasswordPage() {
               }}
             >
               <ArrowLeft size={16} />
-              Back to Login
+              Kembali ke Halaman Masuk
             </Link>
           </div>
         </div>

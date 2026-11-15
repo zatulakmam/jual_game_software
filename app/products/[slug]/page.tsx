@@ -7,10 +7,8 @@ import {
   Star,
   ShoppingCart,
   Zap,
-  ShieldCheck,
   Download,
   Key,
-  CheckCircle2,
   Share2,
   Heart,
   ChevronRight,
@@ -18,6 +16,7 @@ import {
   Layers,
   Clock,
   Sparkles,
+  Info,
 } from 'lucide-react';
 import { PRODUCTS, CATEGORIES } from '@/lib/data';
 import { formatPrice } from '@/lib/utils';
@@ -90,7 +89,7 @@ function ProductDetailContent() {
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center gap-2 text-xs font-bold text-gray-600 mb-6 overflow-x-auto whitespace-nowrap">
-          <Link href="/" className="hover:text-[#171717]">Home</Link>
+          <Link href="/" className="hover:text-[#171717]">Beranda</Link>
           <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
           <Link href="/products" className="hover:text-[#171717]">Produk</Link>
           <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
@@ -140,14 +139,13 @@ function ProductDetailContent() {
                 ))}
               </div>
 
-              {/* Digital Guarantee Box */}
+              {/* Purchase Status */}
               <div className="bg-[#F5F0E8] p-4 rounded-xl border-2 border-[#171717] flex items-start gap-3 mt-2">
-                <ShieldCheck className="w-6 h-6 text-[#171717] flex-shrink-0 mt-0.5" />
+                <Info className="w-6 h-6 text-[#171717] flex-shrink-0 mt-0.5" />
                 <div className="text-xs">
-                  <p className="font-black text-[#171717] uppercase">Proteksi Pembelian Digital</p>
+                  <p className="font-black text-[#171717] uppercase">Info Pembelian</p>
                   <p className="text-gray-700 font-medium mt-0.5">
-                    Kode lisensi atau link unduhan langsung aktif di menu{' '}
-                    <strong>My Purchases</strong> seketika setelah pembayaran diverifikasi.
+                    Checkout masih simulasi. Pembayaran, pengiriman lisensi, dan unduhan belum diproses.
                   </p>
                 </div>
               </div>
@@ -246,20 +244,6 @@ function ProductDetailContent() {
                   </button>
                 </div>
 
-                <div className="flex items-center justify-center gap-6 text-xs text-gray-600 font-bold">
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    Garansi Aktif
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    Pengiriman Instan
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    Dukungan 24/7
-                  </span>
-                </div>
               </div>
             </div>
           </div>

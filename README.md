@@ -1,13 +1,13 @@
-# ⚡ PIXELSTORE – NEO-BRUTALISM DIGITAL MARKETPLACE
+# ⚡ SINZO STORE – KATALOG GAME & SOFTWARE
 
-> **"YOUR DIGITAL WORLD STARTS HERE."**  
-> Platform marketplace penjualan produk digital modern dengan identitas visual **Neo-Brutalism** yang berani, ekspresif, colorful, dan berkinerja tinggi.
+> **"Cari item digital favoritmu di sini."**
+> Katalog game, software, dan item digital dengan identitas visual **Neo-Brutalism**.
 
 ---
 
 ## 🎨 Design System (Neo-Brutalism)
 
-PixelStore dibangun dengan sistem desain Neo-Brutalism yang konsisten di setiap halamannya:
+Sinzo Store dibangun dengan sistem desain Neo-Brutalism yang konsisten di setiap halamannya:
 
 - **Background Utama:** Off-white (`#F5F0E8`)
 - **Warna Utama:** Electric Yellow (`#F9ED32`)
@@ -26,12 +26,12 @@ PixelStore dibangun dengan sistem desain Neo-Brutalism yang konsisten di setiap 
 ## 🚀 Fitur Unggulan
 
 ### 1. 🏠 Landing Page & Storefront
-- **Hero Section:** Headline ekspresif *"YOUR DIGITAL WORLD STARTS HERE."*, floating cards showcase Windows 11 Pro, badges *"DIGITAL GOODS ONLY"*, *"100% INSTANT DELIVERY"*, dekorasi stiker & bintang geometris.
+- **Hero Section:** Katalog game dan software dengan tautan ke detail produk.
 - **Running Marquee Ticker:** Ticker animasi berjalan dengan highlight produk digital.
 - **Kategori Showcase:** 7 kategori dengan palet warna dan ikon tersendiri.
 - **Fresh Drops & Digital Goods:** Grid katalog produk unggulan dengan filter tab interaktif.
-- **Value Proposition:** 4 pilar layanan: Instant Delivery, 100% Genuine & Safe, Metode Pembayaran Lokal, 24/7 Support.
-- **Stats Counter:** Statistik penjualan (10.000+ produk terjual, 99.9% uptime).
+- **Informasi Katalog:** Jumlah produk dan kategori mengikuti data katalog. Statistik transaksi dan ulasan dimulai dari nol.
+- **Status Pembayaran:** Checkout masih simulasi dan belum mencatat transaksi nyata.
 - **Interactive Call-to-Action:** Banner pendaftaran cepat.
 
 ### 2. 🛍️ Katalog Produk & Filter Multi-Kriteria
@@ -64,7 +64,7 @@ PixelStore dibangun dengan sistem desain Neo-Brutalism yang konsisten di setiap 
 
 ### 5. 🔐 Autentikasi & User Dashboard
 - **Form Login, Register & Lupa Password:** Validasi form menggunakan **Zod** & **React Hook Form**, password strength meter, show/hide password toggle.
-- **My Purchases (Produk & Lisensi Saya):**
+- **Pembelian Saya (Produk & Lisensi Saya):**
   - Melihat semua produk yang pernah dibeli.
   - Fitur **1-Click Copy License Key** dengan mask toggle (`•••••-•••••`).
   - Direct download link / file cloud resmi.
@@ -139,4 +139,4 @@ Supabase Auth menyimpan kredensial secara aman; tabel `public.profiles` menyimpa
 
 ---
 
-© 2024 **PixelStore**. All Rights Reserved.
+© **Sinzo Store**.
