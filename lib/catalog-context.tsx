@@ -78,10 +78,18 @@ export function CatalogProvider({ children }: { children: ReactNode }) {
 
     if (error && error.code !== '23505') {
       if (error.code === '42501') {
-        throw new Error('Akun ini belum memiliki izin admin di Supabase.')
+        throw new Error(
+          'Supabase menolak penghapusan. Pastikan migrasi sudah dijalankan dan role profil akunmu adalah admin.'
+        )
       }
 
-      throw error
+      if (error.code === 'PGRST205' || error.code === '42P01') {
+        throw new Error(
+          'Tabel product_deletions belum ditemukan. Jalankan migrasi Supabase product_deletions terlebih dahulu.'
+        )
+      }
+
+      throw new Error(error.message)
     }
 
     setDeletedSlugs((current) => new Set(current).add(slug))
