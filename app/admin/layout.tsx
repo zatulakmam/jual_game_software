@@ -51,7 +51,11 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
           </span>
         </Link>
         {onClose && (
-          <button onClick={onClose} className="text-gray-400 hover:text-white lg:hidden">
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-white"
+            aria-label="Tutup menu admin"
+          >
             <X size={20} />
           </button>
         )}
@@ -122,7 +126,8 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isAdmin] = useState(true)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true)
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   if (!isAdmin) {
     return (
@@ -198,35 +203,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         fontFamily: 'Space Grotesk, sans-serif',
       }}
     >
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:flex" style={{ position: 'fixed', left: 0, top: 0, bottom: 0, zIndex: 50 }}>
-        <Sidebar />
-      </div>
+      {desktopSidebarOpen && (
+        <div className="hidden lg:flex" style={{ position: 'fixed', left: 0, top: 0, bottom: 0, zIndex: 50 }}>
+          <Sidebar onClose={() => setDesktopSidebarOpen(false)} />
+        </div>
+      )}
 
       {/* Mobile Sidebar Overlay */}
-      {sidebarOpen && (
+      {mobileSidebarOpen && (
         <div
           style={{ position: 'fixed', inset: 0, zIndex: 100 }}
           className="lg:hidden"
         >
           <div
             style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)' }}
-            onClick={() => setSidebarOpen(false)}
+            onClick={() => setMobileSidebarOpen(false)}
           />
           <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0 }}>
-            <Sidebar onClose={() => setSidebarOpen(false)} />
+            <Sidebar onClose={() => setMobileSidebarOpen(false)} />
           </div>
         </div>
       )}
 
       {/* Main Content */}
       <div
-        style={{ flex: 1, marginLeft: 0 }}
-        className="lg:ml-[240px]"
+        style={{ flex: 1, minWidth: 0 }}
+        className={`transition-[margin] duration-200 ${desktopSidebarOpen ? 'lg:ml-[240px]' : 'lg:ml-0'}`}
       >
-        {/* Mobile Header */}
         <div
-          className="lg:hidden"
           style={{
             backgroundColor: '#171717',
             padding: '12px 16px',
@@ -236,8 +240,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           }}
         >
           <span style={{ color: '#F9ED32', fontWeight: 800, fontSize: '16px' }}>PIXELSTORE</span>
-          <button onClick={() => setSidebarOpen(true)} style={{ color: '#fff', background: 'none', border: 'none', cursor: 'pointer' }}>
+          <button
+            onClick={() => setMobileSidebarOpen(true)}
+            className="lg:hidden"
+            style={{ color: '#fff', background: 'none', border: 'none', cursor: 'pointer' }}
+            aria-label="Buka menu admin"
+            aria-expanded={mobileSidebarOpen}
+          >
             <Menu size={24} />
+          </button>
+          <button
+            onClick={() => setDesktopSidebarOpen((open) => !open)}
+            className="hidden lg:block"
+            style={{ color: '#fff', background: 'none', border: 'none', cursor: 'pointer' }}
+            aria-label={desktopSidebarOpen ? 'Tutup menu admin' : 'Buka menu admin'}
+            aria-expanded={desktopSidebarOpen}
+          >
+            {desktopSidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 

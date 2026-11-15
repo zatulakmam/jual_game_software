@@ -1,54 +1,23 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Users, Search, Mail, Phone, ShoppingBag, ShieldCheck } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
+import { Search } from 'lucide-react';
+
+interface AdminCustomer {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  ordersCount: number;
+  totalSpent: number;
+  joined: string;
+  status: string;
+}
 
 export default function AdminCustomersPage() {
   const [search, setSearch] = useState('');
 
-  const customers = [
-    {
-      id: 'cust-1',
-      name: 'Budi Santoso',
-      email: 'budi.santoso@example.com',
-      phone: '081234567890',
-      ordersCount: 3,
-      totalSpent: 230000,
-      joined: '12 Okt 2024',
-      status: 'Aktif',
-    },
-    {
-      id: 'cust-2',
-      name: 'Ahmad Faiz',
-      email: 'faiz@gmail.com',
-      phone: '081398765432',
-      ordersCount: 5,
-      totalSpent: 450000,
-      joined: '01 Nov 2024',
-      status: 'Aktif',
-    },
-    {
-      id: 'cust-3',
-      name: 'Nadia Putri',
-      email: 'nadia@yahoo.com',
-      phone: '085712345678',
-      ordersCount: 2,
-      totalSpent: 165000,
-      joined: '05 Nov 2024',
-      status: 'Aktif',
-    },
-    {
-      id: 'cust-4',
-      name: 'Reza Pratama',
-      email: 'reza@outlook.com',
-      phone: '082199887766',
-      ordersCount: 1,
-      totalSpent: 75000,
-      joined: '10 Nov 2024',
-      status: 'Aktif',
-    },
-  ];
+  const customers: AdminCustomer[] = [];
 
   const filtered = customers.filter(
     (c) =>
@@ -65,6 +34,7 @@ export default function AdminCustomersPage() {
         <h1 className="text-3xl font-black text-[#171717] uppercase tracking-tight">
           MANAJEMEN PELANGGAN ({customers.length})
         </h1>
+        <p className="mt-2 text-sm text-gray-500">Data pelanggan belum terhubung ke database.</p>
       </div>
 
       <div className="bg-white p-4 rounded-2xl border-[3px] border-[#171717] shadow-[4px_4px_0px_#171717] max-w-md relative">
@@ -92,7 +62,13 @@ export default function AdminCustomersPage() {
               </tr>
             </thead>
             <tbody className="divide-y-2 divide-gray-100 font-semibold">
-              {filtered.map((c) => (
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="p-8 text-center text-gray-500">
+                    Belum ada data pelanggan.
+                  </td>
+                </tr>
+              ) : filtered.map((c) => (
                 <tr key={c.id} className="hover:bg-gray-50">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
@@ -110,9 +86,7 @@ export default function AdminCustomersPage() {
                     <p className="text-gray-500 text-[10px]">{c.phone}</p>
                   </td>
                   <td className="p-4">{c.ordersCount} Transaksi</td>
-                  <td className="p-4 font-black text-[#171717]">
-                    {formatPrice(c.totalSpent)}
-                  </td>
+                  <td className="p-4 font-black text-[#171717]">Rp{c.totalSpent.toLocaleString('id-ID')}</td>
                   <td className="p-4 text-gray-500">{c.joined}</td>
                   <td className="p-4">
                     <span className="bg-[#55E6D1] text-[#171717] px-2 py-0.5 rounded border border-[#171717] font-black text-[10px] uppercase">

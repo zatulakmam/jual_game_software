@@ -1,18 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  ShoppingBag,
-  Search,
-  CheckCircle2,
-  Clock,
-  XCircle,
-  Filter,
-  Eye,
-  Key,
-} from 'lucide-react';
+import { Search } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
-import toast from 'react-hot-toast';
 
 interface AdminOrder {
   id: string;
@@ -26,68 +16,10 @@ interface AdminOrder {
   date: string;
 }
 
-const INITIAL_ORDERS: AdminOrder[] = [
-  {
-    id: 'PS-992102',
-    customer: 'Ahmad Faiz',
-    email: 'faiz@gmail.com',
-    items: ['Windows 11 Pro License'],
-    total: 85000,
-    paymentMethod: 'QRIS',
-    paymentStatus: 'paid',
-    orderStatus: 'Selesai',
-    date: '15 Nov 2024, 09:12',
-  },
-  {
-    id: 'PS-992101',
-    customer: 'Nadia Putri',
-    email: 'nadia@yahoo.com',
-    items: ['Minecraft Java Edition'],
-    total: 120000,
-    paymentMethod: 'BCA VA',
-    paymentStatus: 'paid',
-    orderStatus: 'Selesai',
-    date: '15 Nov 2024, 08:45',
-  },
-  {
-    id: 'PS-992100',
-    customer: 'Reza Pratama',
-    email: 'reza@outlook.com',
-    items: ['FL Studio Producer Edition'],
-    total: 75000,
-    paymentMethod: 'MANDIRI VA',
-    paymentStatus: 'pending',
-    orderStatus: 'Menunggu Verifikasi',
-    date: '15 Nov 2024, 08:20',
-  },
-  {
-    id: 'PS-992099',
-    customer: 'Indah Kusuma',
-    email: 'indah@gmail.com',
-    items: ['Adobe Creative Assets Bundle', 'Wallpaper Premium Pack'],
-    total: 60000,
-    paymentMethod: 'GOPAY',
-    paymentStatus: 'paid',
-    orderStatus: 'Selesai',
-    date: '14 Nov 2024, 21:05',
-  },
-  {
-    id: 'PS-992098',
-    customer: 'Doni Firmansyah',
-    email: 'doni@gmail.com',
-    items: ['Productivity Notion Template'],
-    total: 25000,
-    paymentMethod: 'QRIS',
-    paymentStatus: 'paid',
-    orderStatus: 'Selesai',
-    date: '14 Nov 2024, 19:30',
-  },
-];
-
 export default function AdminOrdersPage() {
-  const [orders, setOrders] = useState<AdminOrder[]>(INITIAL_ORDERS);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [search, setSearch] = useState('');
+  const orders: AdminOrder[] = [];
 
   const filtered = orders.filter((o) => {
     const matchSearch =
@@ -97,17 +29,6 @@ export default function AdminOrdersPage() {
     const matchStatus = filterStatus === 'all' || o.orderStatus === filterStatus;
     return matchSearch && matchStatus;
   });
-
-  const handleVerify = (id: string) => {
-    setOrders((prev) =>
-      prev.map((o) =>
-        o.id === id
-          ? { ...o, paymentStatus: 'paid', orderStatus: 'Selesai' }
-          : o
-      )
-    );
-    toast.success(`Pesanan ${id} berhasil diverifikasi! Lisensi telah dikirim.`);
-  };
 
   return (
     <div className="p-6 lg:p-10 space-y-6" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -168,7 +89,13 @@ export default function AdminOrdersPage() {
               </tr>
             </thead>
             <tbody className="divide-y-2 divide-gray-100 font-semibold">
-              {filtered.map((o) => (
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="p-8 text-center text-gray-500">
+                    Belum ada pesanan.
+                  </td>
+                </tr>
+              ) : filtered.map((o) => (
                 <tr key={o.id} className="hover:bg-gray-50">
                   <td className="p-4 font-mono font-black text-[#171717]">{o.id}</td>
                   <td className="p-4">
@@ -201,7 +128,6 @@ export default function AdminOrdersPage() {
                   <td className="p-4 text-center">
                     {o.orderStatus === 'Menunggu Verifikasi' ? (
                       <button
-                        onClick={() => handleVerify(o.id)}
                         className="px-3 py-1.5 bg-[#55E6D1] hover:bg-[#3ed0ba] text-[#171717] font-black text-[10px] rounded-lg border border-[#171717] shadow-[2px_2px_0px_#171717] uppercase tracking-wider"
                       >
                         ✓ Verifikasi Bayar

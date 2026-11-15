@@ -32,9 +32,9 @@ export default function CheckoutPage() {
   const [step, setStep] = useState<1 | 2>(1);
 
   // Buyer Info Form State
-  const [buyerName, setBuyerName] = useState('Budi Santoso');
-  const [buyerEmail, setBuyerEmail] = useState('budi.santoso@example.com');
-  const [buyerPhone, setBuyerPhone] = useState('081234567890');
+  const [buyerName, setBuyerName] = useState('');
+  const [buyerEmail, setBuyerEmail] = useState('');
+  const [buyerPhone, setBuyerPhone] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('qris');
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -114,7 +114,7 @@ export default function CheckoutPage() {
       setIsProcessing(false);
       setStep(2);
 
-      toast.success('Pesanan berhasil dibuat & diverifikasi!', {
+      toast.success('Simulasi checkout selesai. Transaksi belum dicatat.', {
         style: {
           border: '2px solid #171717',
           background: '#55E6D1',
@@ -296,7 +296,7 @@ export default function CheckoutPage() {
                   <div className="mt-4 p-3 bg-[#F5F0E8] rounded-xl border border-dashed border-[#171717] text-[11px] text-gray-600 font-semibold flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-[#FF7547] flex-shrink-0" />
                     <span>
-                      Sistem siap diintegrasikan dengan Midtrans / Xendit / Tripay untuk pembayaran riil.
+                      Pembayaran belum aktif. Checkout ini hanya simulasi dan tidak membuat transaksi atau mengirim lisensi.
                     </span>
                   </div>
                 </div>
@@ -385,33 +385,32 @@ export default function CheckoutPage() {
               </div>
 
               <div className="inline-block px-3 py-1 bg-[#F9ED32] text-[#171717] rounded border border-[#171717] text-xs font-black uppercase mb-3">
-                PEMBAYARAN DIVERIFIKASI
+                SIMULASI CHECKOUT
               </div>
 
               <h1 className="text-3xl sm:text-4xl font-black text-[#171717] uppercase tracking-tight mb-2">
-                PESANAN BERHASIL!
+                SIMULASI SELESAI
               </h1>
               <p className="text-sm text-gray-600 font-semibold mb-8">
-                Terima kasih! Lisensi dan tautan unduhan produk digital kamu telah diaktifkan dan dikirimkan ke email{' '}
-                <strong className="text-[#171717]">{buyerEmail}</strong>.
+                Belum ada pembayaran, pesanan, atau lisensi yang dibuat. Transaksi baru akan tercatat setelah sistem pembayaran aktif.
               </p>
 
               {/* Order Info Box */}
               <div className="bg-[#F5F0E8] p-5 rounded-2xl border-2 border-[#171717] text-left mb-8 space-y-3">
                 <div className="flex justify-between text-xs font-bold border-b border-gray-300 pb-2">
-                  <span className="text-gray-500 uppercase">Nomor Pesanan</span>
+                  <span className="text-gray-500 uppercase">Nomor Simulasi</span>
                   <span className="font-mono font-black text-[#171717]">{confirmedOrder.orderId}</span>
                 </div>
                 <div className="flex justify-between text-xs font-bold border-b border-gray-300 pb-2">
-                  <span className="text-gray-500 uppercase">Metode Pembayaran</span>
+                  <span className="text-gray-500 uppercase">Metode Pilihan</span>
                   <span className="font-black text-[#171717]">{confirmedOrder.paymentMethod}</span>
                 </div>
                 <div className="flex justify-between text-xs font-bold border-b border-gray-300 pb-2">
-                  <span className="text-gray-500 uppercase">Waktu Transaksi</span>
+                  <span className="text-gray-500 uppercase">Waktu Simulasi</span>
                   <span className="font-semibold text-[#171717]">{confirmedOrder.date}</span>
                 </div>
                 <div className="flex justify-between text-xs font-bold">
-                  <span className="text-gray-500 uppercase">Total Dibayar</span>
+                  <span className="text-gray-500 uppercase">Total Harga Simulasi</span>
                   <span className="font-black text-[#171717] text-sm">
                     {formatPrice(confirmedOrder.total)}
                   </span>

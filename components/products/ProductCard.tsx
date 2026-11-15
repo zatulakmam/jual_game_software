@@ -82,9 +82,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = '
           {/* Rating & Sold count */}
           <div className="flex items-center justify-between text-xs mb-2 font-semibold text-gray-700">
             <div className="flex items-center gap-1 bg-[#F9ED32] px-1.5 py-0.5 rounded border border-[#171717]">
-              <Star className="w-3.5 h-3.5 fill-[#171717] text-[#171717]" />
-              <span>{product.rating.toFixed(1)}</span>
-              <span className="text-gray-600 font-normal">({product.review_count})</span>
+              {product.review_count > 0 ? (
+                <>
+                  <Star className="w-3.5 h-3.5 fill-[#171717] text-[#171717]" />
+                  <span>{product.rating.toFixed(1)}</span>
+                  <span className="text-gray-600 font-normal">({product.review_count})</span>
+                </>
+              ) : (
+                <span>Belum ada ulasan</span>
+              )}
             </div>
             <span className="text-gray-500">{product.sold_count.toLocaleString('id-ID')} terjual</span>
           </div>

@@ -166,9 +166,15 @@ function ProductDetailContent() {
                   </Link>
 
                   <div className="flex items-center gap-1.5 bg-[#F9ED32] px-2.5 py-1 rounded-md border border-[#171717] text-xs font-black text-[#171717]">
-                    <Star className="w-4 h-4 fill-[#171717] text-[#171717]" />
-                    <span>{product.rating.toFixed(1)}</span>
-                    <span className="text-gray-700 font-medium">({product.review_count} ulasan)</span>
+                    {product.review_count > 0 ? (
+                      <>
+                        <Star className="w-4 h-4 fill-[#171717] text-[#171717]" />
+                        <span>{product.rating.toFixed(1)}</span>
+                        <span className="text-gray-700 font-medium">({product.review_count} ulasan)</span>
+                      </>
+                    ) : (
+                      <span className="text-gray-700 font-medium">Belum ada ulasan</span>
+                    )}
                     <span className="text-gray-400">·</span>
                     <span className="text-gray-700 font-medium">{product.sold_count} terjual</span>
                   </div>
@@ -369,52 +375,17 @@ function ProductDetailContent() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xl font-black text-[#171717] uppercase">Ulasan Pembeli Terverifikasi</h3>
-                  <p className="text-xs text-gray-600 font-medium">Rating rata-rata: {product.rating} dari 5.0 bintang</p>
+                  <p className="text-xs text-gray-600 font-medium">
+                    {product.review_count > 0
+                      ? `Rating rata-rata: ${product.rating} dari 5.0 bintang`
+                      : 'Belum ada ulasan untuk produk ini.'}
+                  </p>
                 </div>
               </div>
 
               {/* Review List */}
-              <div className="space-y-4">
-                {[
-                  {
-                    name: 'Rian Pratama',
-                    date: '2 hari yang lalu',
-                    rating: 5,
-                    comment: 'Langsung aktif dan lisensinya resmi! Sangat recommended untuk yang butuh cepat tanpa drama.',
-                  },
-                  {
-                    name: 'Sarah Wijaya',
-                    date: '1 minggu yang lalu',
-                    rating: 5,
-                    comment: 'Proses pembayaran via QRIS instan, dalam 1 menit kode langsung muncul di dashboard pembeli.',
-                  },
-                  {
-                    name: 'Dimas Ardiansyah',
-                    date: '2 minggu yang lalu',
-                    rating: 4,
-                    comment: 'Produk sesuai deskripsi, CS ramah waktu ditanya panduan aktivasi. Mantap PixelStore!',
-                  },
-                ].map((rev, i) => (
-                  <div key={i} className="p-4 bg-[#F5F0E8] rounded-xl border-2 border-[#171717]">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-[#F9ED32] border border-[#171717] flex items-center justify-center font-black text-xs">
-                          {rev.name.charAt(0)}
-                        </div>
-                        <div>
-                          <p className="text-xs font-black text-[#171717]">{rev.name}</p>
-                          <span className="text-[10px] text-gray-500 font-bold">{rev.date}</span>
-                        </div>
-                      </div>
-                      <div className="flex text-[#F9ED32]">
-                        {Array.from({ length: rev.rating }).map((_, j) => (
-                          <Star key={j} className="w-3.5 h-3.5 fill-[#171717] text-[#171717]" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-xs text-gray-800 font-medium">{rev.comment}</p>
-                  </div>
-                ))}
+              <div className="rounded-xl border-2 border-dashed border-gray-300 p-8 text-center text-sm font-bold text-gray-500">
+                Belum ada ulasan pelanggan.
               </div>
             </div>
           )}

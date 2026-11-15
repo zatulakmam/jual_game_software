@@ -1,95 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  TrendingUp,
-  DollarSign,
   Package,
   Users,
   ShoppingBag,
-  ArrowUpRight,
-  ArrowDownRight,
-  ChevronRight,
-  CheckCircle2,
-  Clock,
-  Sparkles,
 } from 'lucide-react';
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  BarChart,
-  Bar,
-} from 'recharts';
-import { PRODUCTS } from '@/lib/data';
+import { CATEGORIES, PRODUCTS } from '@/lib/data';
 import { formatPrice } from '@/lib/utils';
-
-const chartData = [
-  { month: 'Jan', revenue: 2400000, orders: 45 },
-  { month: 'Feb', revenue: 3100000, orders: 58 },
-  { month: 'Mar', revenue: 4200000, orders: 72 },
-  { month: 'Apr', revenue: 3800000, orders: 65 },
-  { month: 'Mei', revenue: 5100000, orders: 90 },
-  { month: 'Jun', revenue: 6400000, orders: 110 },
-  { month: 'Jul', revenue: 5900000, orders: 104 },
-  { month: 'Agu', revenue: 7200000, orders: 128 },
-  { month: 'Sep', revenue: 6800000, orders: 119 },
-  { month: 'Okt', revenue: 8100000, orders: 142 },
-  { month: 'Nov', revenue: 8750000, orders: 156 },
-];
-
-const recentOrders = [
-  {
-    id: 'PS-992102',
-    customer: 'Ahmad Faiz',
-    email: 'faiz@gmail.com',
-    product: 'Windows 11 Pro License',
-    amount: 85000,
-    status: 'Selesai',
-    date: '10 menit yang lalu',
-  },
-  {
-    id: 'PS-992101',
-    customer: 'Nadia Putri',
-    email: 'nadia@yahoo.com',
-    product: 'Minecraft Java Edition',
-    amount: 120000,
-    status: 'Selesai',
-    date: '35 menit yang lalu',
-  },
-  {
-    id: 'PS-992100',
-    customer: 'Reza Pratama',
-    email: 'reza@outlook.com',
-    product: 'FL Studio Producer Edition',
-    amount: 75000,
-    status: 'Menunggu Verifikasi',
-    date: '1 jam yang lalu',
-  },
-  {
-    id: 'PS-992099',
-    customer: 'Indah Kusuma',
-    email: 'indah@gmail.com',
-    product: 'Adobe Creative Assets',
-    amount: 45000,
-    status: 'Selesai',
-    date: '3 jam yang lalu',
-  },
-  {
-    id: 'PS-992098',
-    customer: 'Doni Firmansyah',
-    email: 'doni@gmail.com',
-    product: 'Productivity Notion Template',
-    amount: 25000,
-    status: 'Selesai',
-    date: '5 jam yang lalu',
-  },
-];
 
 export default function AdminDashboardPage() {
   return (
@@ -128,11 +46,10 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="text-2xl lg:text-3xl font-black text-[#171717] mb-2">
-            Rp8.750.000
+            {formatPrice(0)}
           </div>
-          <div className="flex items-center gap-1.5 text-xs font-black text-green-900">
-            <TrendingUp className="w-4 h-4" />
-            <span>+18.4% bulan ini</span>
+          <div className="text-xs font-black text-green-900">
+            Belum ada transaksi
           </div>
         </div>
 
@@ -145,10 +62,10 @@ export default function AdminDashboardPage() {
             <Package className="w-6 h-6 text-[#171717]" />
           </div>
           <div className="text-2xl lg:text-3xl font-black text-[#171717] mb-2">
-            47 Item
+            {PRODUCTS.length} Item
           </div>
           <div className="flex items-center gap-1.5 text-xs font-black text-[#171717]">
-            <span>7 kategori aktif</span>
+            <span>{CATEGORIES.length} kategori tersedia</span>
           </div>
         </div>
 
@@ -156,15 +73,15 @@ export default function AdminDashboardPage() {
         <div className="bg-[#55E6D1] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717]">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-black uppercase text-[#171717] tracking-wider">
-              Total Pelanggan
+              Total Pembeli
             </span>
             <Users className="w-6 h-6 text-[#171717]" />
           </div>
           <div className="text-2xl lg:text-3xl font-black text-[#171717] mb-2">
-            1.284 User
+            0 User
           </div>
           <div className="flex items-center gap-1.5 text-xs font-black text-[#171717]">
-            <span>+48 pendaftar baru</span>
+            <span>Belum ada data pelanggan</span>
           </div>
         </div>
 
@@ -177,10 +94,10 @@ export default function AdminDashboardPage() {
             <ShoppingBag className="w-6 h-6 text-white" />
           </div>
           <div className="text-2xl lg:text-3xl font-black mb-2">
-            892 Pesanan
+            0 Pesanan
           </div>
           <div className="flex items-center gap-1.5 text-xs font-black">
-            <span>99.2% sukses terverifikasi</span>
+            <span>Belum ada transaksi</span>
           </div>
         </div>
       </div>
@@ -190,53 +107,17 @@ export default function AdminDashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b-2 border-[#171717]">
           <div>
             <h2 className="text-xl font-black text-[#171717] uppercase tracking-tight">
-              GRAFIK TREN PENJUALAN TAHUN 2024
+              GRAFIK TREN PENJUALAN
             </h2>
-            <p className="text-xs text-gray-500 font-medium">Pertumbuhan omset produk digital per bulan</p>
+            <p className="text-xs text-gray-500 font-medium">Data transaksi yang tercatat</p>
           </div>
           <span className="text-xs font-black bg-[#F9ED32] text-[#171717] px-3 py-1 rounded border border-[#171717]">
-            Revenue (IDR)
+            Revenue: {formatPrice(0)}
           </span>
         </div>
 
-        <div className="h-72 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-              <defs>
-                <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#F9ED32" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#F9ED32" stopOpacity={0.05} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="month" stroke="#171717" fontSize={12} fontWeight="bold" />
-              <YAxis
-                stroke="#171717"
-                fontSize={11}
-                fontWeight="bold"
-                tickFormatter={(val) => `Rp${val / 1000000}M`}
-              />
-              <Tooltip
-                formatter={(value: any) => [formatPrice(Number(value)), 'Pendapatan']}
-                contentStyle={{
-                  backgroundColor: '#171717',
-                  color: '#fff',
-                  border: '2px solid #F9ED32',
-                  borderRadius: '8px',
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontWeight: 'bold',
-                }}
-              />
-              <Area
-                type="monotone"
-                dataKey="revenue"
-                stroke="#171717"
-                strokeWidth={3}
-                fillOpacity={1}
-                fill="url(#colorRev)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+        <div className="flex h-72 items-center justify-center rounded-xl border-2 border-dashed border-gray-300 text-sm font-bold text-gray-500">
+          Belum ada transaksi untuk ditampilkan.
         </div>
       </div>
 
@@ -252,7 +133,7 @@ export default function AdminDashboardPage() {
               href="/admin/orders"
               className="text-xs font-black text-[#171717] hover:underline"
             >
-              Lihat Semua ({recentOrders.length}) →
+              Lihat Semua (0) →
             </Link>
           </div>
 
@@ -268,28 +149,11 @@ export default function AdminDashboardPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 font-semibold">
-                {recentOrders.map((ord) => (
-                  <tr key={ord.id} className="hover:bg-gray-50">
-                    <td className="p-3 font-mono font-black text-[#171717]">{ord.id}</td>
-                    <td className="p-3">
-                      <p className="font-bold text-[#171717]">{ord.customer}</p>
-                      <p className="text-[10px] text-gray-400">{ord.date}</p>
-                    </td>
-                    <td className="p-3 font-medium text-gray-800 line-clamp-1">{ord.product}</td>
-                    <td className="p-3 font-black text-[#171717]">{formatPrice(ord.amount)}</td>
-                    <td className="p-3">
-                      <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${
-                          ord.status === 'Selesai'
-                            ? 'bg-[#55E6D1] text-[#171717] border-[#171717]'
-                            : 'bg-[#F9ED32] text-[#171717] border-[#171717]'
-                        }`}
-                      >
-                        {ord.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+                <tr>
+                  <td colSpan={5} className="p-8 text-center text-gray-500">
+                    Belum ada pesanan.
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -310,25 +174,9 @@ export default function AdminDashboardPage() {
           </div>
 
           <div className="space-y-4">
-            {PRODUCTS.slice(0, 5).map((p, idx) => (
-              <div key={p.id} className="flex items-center gap-3">
-                <span className="w-6 h-6 rounded-full bg-[#171717] text-white flex items-center justify-center font-black text-xs flex-shrink-0">
-                  {idx + 1}
-                </span>
-                <img
-                  src={p.cover_image}
-                  alt={p.name}
-                  className="w-10 h-10 rounded-lg border border-[#171717] object-cover flex-shrink-0"
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-black text-[#171717] truncate">{p.name}</p>
-                  <p className="text-[10px] text-gray-500 font-bold">{p.sold_count} terjual</p>
-                </div>
-                <span className="text-xs font-black text-[#171717]">
-                  {formatPrice(p.price)}
-                </span>
-              </div>
-            ))}
+            <p className="py-8 text-center text-sm font-bold text-gray-500">
+              Belum ada produk terjual.
+            </p>
           </div>
         </div>
       </div>
