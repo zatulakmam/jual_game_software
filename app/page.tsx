@@ -134,7 +134,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Product Highlight Banner */}
-                  <div className="relative h-52 w-full rounded-xl border-2 border-[#171717] overflow-hidden mb-4 bg-gray-100">
+                  <div className="relative h-40 w-full rounded-xl border-2 border-[#171717] overflow-hidden mb-4 bg-gray-100">
                     <img
                       src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&h=400&fit=crop"
                       alt="Windows 11 Pro"
