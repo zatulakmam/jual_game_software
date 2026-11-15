@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-yellow: #F9ED32;
+  --brand-purple: #A78BFA;
+  --brand-cyan: #55E6D1;
+  --brand-orange: #FF7547;
+  --brand-bg: #F5F0E8;
+  --brand-black: #171717;
+  --brand-white: #FFFFFF;
+  --shadow-brutal: 4px 4px 0px #171717;
+  --shadow-brutal-sm: 2px 2px 0px #171717;
+  --shadow-brutal-lg: 6px 6px 0px #171717;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: var(--brand-bg);
+  color: var(--brand-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@layer components {
+  .brutal-border {
+    border: 2px solid #171717;
+  }
+
+  .brutal-border-thick {
+    border: 3px solid #171717;
+  }
+
+  .hover-lift {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  .hover-lift-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hover-lift-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 6px 10px 0px #171717;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--brand-bg);
+  border-left: 1px solid #171717;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brand-yellow);
+  border: 1px solid #171717;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-orange);
+}
+
+/* Selection styling */
+::selection {
+  background-color: var(--brand-yellow);
+  color: var(--brand-black);
+}
+
+/* Loading shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #e8e3db 25%,
+    #f5f0e8 50%,
+    #e8e3db 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--brand-yellow);
+  outline-offset: 2px;
+}
