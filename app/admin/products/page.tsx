@@ -14,11 +14,13 @@ import {
   Filter,
 } from 'lucide-react';
 import { PRODUCTS as INITIAL_PRODUCTS, CATEGORIES } from '@/lib/data';
-import type { Product } from '@/lib/types';
+import type { BadgeType, Product } from '@/lib/types';
 import { formatPrice } from '@/lib/utils';
 import toast from 'react-hot-toast';
+import { useCatalog } from '@/lib/catalog-context';
 
 export default function AdminProductsPage() {
+  const { deletedSlugs, deleteProduct } = useCatalog();
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCat, setSelectedCat] = useState('all');
@@ -42,7 +44,9 @@ export default function AdminProductsPage() {
     'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop'
   );
 
-  const filteredProducts = products.filter((p) => {
+  const visibleProducts = products.filter((product) => !deletedSlugs.has(product.slug));
+
+  const filteredProducts = visibleProducts.filter((p) => {
     const matchSearch =
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -80,12 +84,16 @@ export default function AdminProductsPage() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (confirm(`Yakin ingin menghapus produk "${name}"?`)) {
-      setProducts((prev) => prev.filter((p) => p.id !== id));
-      toast.success(`Produk "${name}" berhasil dihapus`, {
+  const handleDelete = async (slug: string, name: string) => {
+    if (!confirm(`Yakin ingin menghapus produk "${name}" dari katalog?`)) return;
+
+    try {
+      await deleteProduct(slug);
+      toast.success(`Produk "${name}" berhasil dihapus dari katalog`, {
         style: { border: '2px solid #171717', background: '#FF7547', color: '#fff' },
       });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Produk gagal dihapus.');
     }
   };
 
@@ -163,7 +171,7 @@ export default function AdminProductsPage() {
             MANAJEMEN KATALOG
           </div>
           <h1 className="text-3xl font-black text-[#171717] uppercase tracking-tight">
-            KELOLA PRODUK DIGITAL ({products.length})
+            KELOLA PRODUK DIGITAL ({visibleProducts.length})
           </h1>
         </div>
 
@@ -274,7 +282,7 @@ export default function AdminProductsPage() {
                         </button>
 
                         <button
-                          onClick={() => handleDelete(p.id, p.name)}
+                          onClick={() => handleDelete(p.slug, p.name)}
                           className="p-1.5 bg-[#FF7547] hover:bg-[#f36332] text-white rounded-lg border border-[#171717] shadow-[1px_1px_0px_#171717]"
                           title="Hapus Produk"
                         >
@@ -340,7 +348,7 @@ export default function AdminProductsPage() {
                   <select
                     value={formBadge || 'none'}
                     onChange={(e) =>
-                      setFormBadge(e.target.value === 'none' ? undefined : (e.target.value as any))
+                      setFormBadge(e.target.value === 'none' ? undefined : (e.target.value as BadgeType))
                     }
                     className="w-full px-3 py-2 bg-[#F5F0E8] border-2 border-[#171717] rounded-xl text-xs font-bold focus:outline-none cursor-pointer"
                   >

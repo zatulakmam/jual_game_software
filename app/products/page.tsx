@@ -11,12 +11,14 @@ import {
   ArrowUpDown,
   Sparkles,
 } from 'lucide-react';
-import { PRODUCTS, CATEGORIES } from '@/lib/data';
+import { CATEGORIES } from '@/lib/data';
 import { ProductCard } from '@/components/products/ProductCard';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import { formatPrice } from '@/lib/utils';
+import { useCatalog } from '@/lib/catalog-context';
 
 export default function ProductsPage() {
+  const { products } = useCatalog();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<number>(150000);
@@ -25,7 +27,7 @@ export default function ProductsPage() {
 
   // Filter & Sort Logic
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((product) => {
+    return products.filter((product) => {
       // Search
       const matchesSearch =
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -50,7 +52,7 @@ export default function ProductsPage() {
       if (sortBy === 'newest') return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
       return b.sold_count - a.sold_count; // 'popular'
     });
-  }, [searchQuery, selectedCategory, priceRange, sortBy, selectedBadge]);
+  }, [products, searchQuery, selectedCategory, priceRange, sortBy, selectedBadge]);
 
   const resetFilters = () => {
     setSearchQuery('');
@@ -142,7 +144,7 @@ export default function ProductsPage() {
                   >
                     <span>Semua Kategori</span>
                     <span className="text-[10px] bg-white px-1.5 py-0.5 rounded border border-[#171717]">
-                      {PRODUCTS.length}
+                      {products.length}
                     </span>
                   </button>
 
@@ -158,7 +160,7 @@ export default function ProductsPage() {
                     >
                       <span className="line-clamp-1">{cat.name}</span>
                       <span className="text-[10px] bg-white px-1.5 py-0.5 rounded border border-[#171717]">
-                        {PRODUCTS.filter((p) => p.category_id === cat.id).length}
+                        {products.filter((p) => p.category_id === cat.id).length}
                       </span>
                     </button>
                   ))}
@@ -229,7 +231,9 @@ export default function ProductsPage() {
                 <span className="text-xs font-bold text-gray-600 hidden sm:inline">Urutkan:</span>
                 <select
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
+                  onChange={(e) =>
+                    setSortBy(e.target.value as 'newest' | 'price-low' | 'price-high' | 'popular')
+                  }
                   className="px-3 py-1.5 bg-[#F5F0E8] border-2 border-[#171717] rounded-lg text-xs font-black text-[#171717] focus:outline-none cursor-pointer"
                 >
                   <option value="popular">Paling Populer</option>

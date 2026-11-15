@@ -18,19 +18,21 @@ import {
   Sparkles,
   Info,
 } from 'lucide-react';
-import { PRODUCTS, CATEGORIES } from '@/lib/data';
+import { CATEGORIES } from '@/lib/data';
 import { formatPrice } from '@/lib/utils';
 import { Badge } from '@/components/ui/Badge';
 import { useCartStore } from '@/lib/store';
 import toast from 'react-hot-toast';
 import { ProductCard } from '@/components/products/ProductCard';
+import { useCatalog } from '@/lib/catalog-context';
 
 function ProductDetailContent() {
   const params = useParams();
   const router = useRouter();
   const slug = params?.slug as string;
+  const { products } = useCatalog();
 
-  const product = PRODUCTS.find((p) => p.slug === slug);
+  const product = products.find((p) => p.slug === slug);
   const addItem = useCartStore((state) => state.addItem);
 
   const [activeTab, setActiveTab] = useState<'desc' | 'specs' | 'reviews'>('desc');
@@ -60,7 +62,7 @@ function ProductDetailContent() {
   }
 
   const category = CATEGORIES.find((c) => c.id === product.category_id);
-  const relatedProducts = PRODUCTS.filter(
+  const relatedProducts = products.filter(
     (p) => p.category_id === product.category_id && p.id !== product.id
   ).slice(0, 4);
 

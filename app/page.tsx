@@ -8,19 +8,22 @@ import {
   Layers,
   ChevronRight,
 } from 'lucide-react';
-import { CATEGORIES, PRODUCTS } from '@/lib/data';
+import { CATEGORIES } from '@/lib/data';
 import { ProductCard } from '@/components/products/ProductCard';
 import { CategoryCard } from '@/components/products/CategoryCard';
 import { useCurrentUser } from '@/lib/useCurrentUser';
+import { useCatalog } from '@/lib/catalog-context';
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const user = useCurrentUser();
+  const { products } = useCatalog();
 
   const filteredProducts =
     selectedCategory === 'all'
-      ? PRODUCTS
-      : PRODUCTS.filter((p) => p.category_id === selectedCategory);
+      ? products
+      : products.filter((p) => p.category_id === selectedCategory);
+  const featuredProduct = products[0];
 
   return (
     <div className="min-h-screen bg-[#F5F0E8] overflow-hidden" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -130,8 +133,8 @@ export default function HomePage() {
                   {/* Product Highlight Banner */}
                   <div className="relative h-40 w-full rounded-xl border-2 border-[#171717] overflow-hidden mb-4 bg-gray-100">
                     <img
-                      src={PRODUCTS[0]?.cover_image ?? ''}
-                      alt={PRODUCTS[0]?.name ?? 'Produk digital'}
+                      src={featuredProduct?.cover_image ?? ''}
+                      alt={featuredProduct?.name ?? 'Produk digital'}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-3 left-3 bg-[#F9ED32] text-[#171717] text-xs font-black px-2.5 py-1 rounded border-2 border-[#171717] shadow-[2px_2px_0px_#171717]">
@@ -147,15 +150,15 @@ export default function HomePage() {
                     </div>
 
                     <h3 className="text-xl font-black text-[#171717]">
-                      {PRODUCTS[0]?.name ?? 'Produk digital'}
+                      {featuredProduct?.name ?? 'Produk digital'}
                     </h3>
 
                     <div className="flex items-center justify-between pt-2">
                       <span className="text-2xl font-black text-[#171717]">
-                        {PRODUCTS[0]?.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 })}
+                        {featuredProduct?.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 })}
                       </span>
                       <Link
-                        href={PRODUCTS[0] ? `/products/${PRODUCTS[0].slug}` : '/products'}
+                        href={featuredProduct ? `/products/${featuredProduct.slug}` : '/products'}
                         className="px-4 py-2 bg-[#55E6D1] hover:bg-[#40d2be] text-[#171717] text-xs font-black rounded-lg border-2 border-[#171717] shadow-[3px_3px_0px_#171717] transition-all"
                       >
                         Lihat Produk
@@ -238,7 +241,13 @@ export default function HomePage() {
         {/* Categories Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {CATEGORIES.map((cat) => (
-            <CategoryCard key={cat.id} category={cat} />
+            <CategoryCard
+              key={cat.id}
+              category={{
+                ...cat,
+                product_count: products.filter((product) => product.category_id === cat.id).length,
+              }}
+            />
           ))}
         </div>
       </section>
@@ -301,7 +310,7 @@ export default function HomePage() {
               href="/products"
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] text-base font-black rounded-xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover:shadow-[7px_7px_0px_#171717] hover:-translate-y-1 transition-all"
             >
-              <span>Jelajahi Seluruh Katalog ({PRODUCTS.length} Produk)</span>
+              <span>Jelajahi Seluruh Katalog ({products.length} Produk)</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -374,7 +383,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="p-4 border-2 border-dashed border-gray-700 rounded-xl">
-              <p className="text-3xl md:text-5xl font-black text-[#F9ED32] mb-1">              {PRODUCTS.length}</p>
+              <p className="text-3xl md:text-5xl font-black text-[#F9ED32] mb-1">{products.length}</p>
               <p className="text-xs md:text-sm font-bold uppercase tracking-wider text-gray-300">
                 Produk di Katalog
               </p>

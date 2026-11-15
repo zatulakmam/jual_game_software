@@ -1,4 +1,32 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
+import type { SupabaseClient } from '@supabase/supabase-js'
+
+type Database = {
+  public: {
+    Tables: {
+      product_deletions: {
+        Row: {
+          slug: string
+          deleted_by: string | null
+          deleted_at: string
+        }
+        Insert: {
+          slug: string
+          deleted_by?: string | null
+          deleted_at?: string
+        }
+        Update: {
+          slug?: string
+          deleted_by?: string | null
+          deleted_at?: string
+        }
+        Relationships: []
+      }
+    }
+    Views: Record<string, never>
+    Functions: Record<string, never>
+  }
+}
 
 const configuredUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const configuredAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -20,11 +48,11 @@ if (!isSupabaseConfigured && process.env.NODE_ENV !== 'test') {
 }
 
 // Browser client (singleton)
-let browserClient: ReturnType<typeof createSupabaseClient> | null = null
+let browserClient: SupabaseClient<Database> | null = null
 
-export function createClient() {
+export function createClient(): SupabaseClient<Database> {
   if (browserClient) return browserClient
-  browserClient = createSupabaseClient(supabaseUrl, supabaseAnonKey, {
+  browserClient = createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
@@ -34,8 +62,8 @@ export function createClient() {
 }
 
 // Server client (new instance per request for server components)
-export function createServerClient() {
-  return createSupabaseClient(supabaseUrl, supabaseAnonKey, {
+export function createServerClient(): SupabaseClient<Database> {
+  return createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,

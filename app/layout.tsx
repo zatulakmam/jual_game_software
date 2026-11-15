@@ -3,6 +3,7 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from 'react-hot-toast';
+import { CatalogProvider } from '@/lib/catalog-context';
 
 export const metadata: Metadata = {
   title: 'Sinzo Store – Game & Software Digital',
@@ -46,7 +47,9 @@ export default function RootLayout({
           }}
         />
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <CatalogProvider>{children}</CatalogProvider>
+        </main>
         <Footer />
       </body>
     </html>

@@ -5,8 +5,11 @@ import Link from 'next/link';
 import { Layers, Sparkles } from 'lucide-react';
 import { CATEGORIES } from '@/lib/data';
 import { CategoryCard } from '@/components/products/CategoryCard';
+import { useCatalog } from '@/lib/catalog-context';
 
 export default function CategoriesPage() {
+  const { products } = useCatalog();
+
   return (
     <div className="min-h-screen bg-[#F5F0E8] py-12 px-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       <div className="max-w-7xl mx-auto">
@@ -30,7 +33,13 @@ export default function CategoriesPage() {
         {/* Categories Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {CATEGORIES.map((category) => (
-            <CategoryCard key={category.id} category={category} />
+            <CategoryCard
+              key={category.id}
+              category={{
+                ...category,
+                product_count: products.filter((product) => product.category_id === category.id).length,
+              }}
+            />
           ))}
         </div>
       </div>

@@ -12,8 +12,10 @@ import {
 import { CATEGORIES as INITIAL_CATS } from '@/lib/data';
 import type { Category } from '@/lib/types';
 import toast from 'react-hot-toast';
+import { useCatalog } from '@/lib/catalog-context';
 
 export default function AdminCategoriesPage() {
+  const { products } = useCatalog();
   const [categories, setCategories] = useState<Category[]>(INITIAL_CATS);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState('');
@@ -81,7 +83,7 @@ export default function AdminCategoriesPage() {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-black px-2 py-0.5 rounded bg-[#171717] text-white">
-                  {c.product_count} Produk
+                  {products.filter((product) => product.category_id === c.id).length} Produk
                 </span>
                 <button
                   onClick={() => handleDelete(c.id, c.name)}

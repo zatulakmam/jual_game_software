@@ -4,12 +4,14 @@ import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { CATEGORIES, PRODUCTS } from '@/lib/data';
+import { CATEGORIES } from '@/lib/data';
 import { ProductGrid } from '@/components/products/ProductGrid';
+import { useCatalog } from '@/lib/catalog-context';
 
 function CategoryDetailContent() {
   const params = useParams();
   const slug = params?.slug as string;
+  const { products } = useCatalog();
 
   const category = CATEGORIES.find((c) => c.slug === slug);
 
@@ -34,7 +36,7 @@ function CategoryDetailContent() {
     );
   }
 
-  const categoryProducts = PRODUCTS.filter((p) => p.category_id === category.id);
+  const categoryProducts = products.filter((p) => p.category_id === category.id);
 
   return (
     <div className="min-h-screen bg-[#F5F0E8] py-8 px-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>

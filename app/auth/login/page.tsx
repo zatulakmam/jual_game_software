@@ -9,7 +9,8 @@ import toast from 'react-hot-toast';
 import { Eye, EyeOff, Star, Zap, ShoppingBag } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { createClient, isSupabaseConfigured } from '@/lib/supabase';
-import { CATEGORIES, PRODUCTS } from '@/lib/data';
+import { CATEGORIES } from '@/lib/data';
+import { useCatalog } from '@/lib/catalog-context';
 
 const loginSchema = z.object({
   email: z.string().email('Masukkan alamat email yang valid.'),
@@ -22,6 +23,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { products } = useCatalog();
 
   const {
     register,
@@ -226,7 +228,7 @@ export default function LoginPage() {
           {/* Bottom stats */}
           <div style={{ display: 'flex', gap: 32 }}>
             {[
-              { value: PRODUCTS.length, label: 'Produk di katalog' },
+              { value: products.length, label: 'Produk di katalog' },
               { value: CATEGORIES.length, label: 'Kategori' },
               { value: '0', label: 'Transaksi tercatat' },
             ].map((stat) => (

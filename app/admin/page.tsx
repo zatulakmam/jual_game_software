@@ -6,10 +6,13 @@ import {
   Users,
   ShoppingBag,
 } from 'lucide-react';
-import { CATEGORIES, PRODUCTS } from '@/lib/data';
+import { CATEGORIES } from '@/lib/data';
 import { formatPrice } from '@/lib/utils';
+import { useCatalog } from '@/lib/catalog-context';
 
 export default function AdminDashboardPage() {
+  const { products } = useCatalog();
+
   return (
     <div className="p-6 lg:p-10 space-y-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
       {/* Top Header */}
@@ -62,7 +65,7 @@ export default function AdminDashboardPage() {
             <Package className="w-6 h-6 text-[#171717]" />
           </div>
           <div className="text-2xl lg:text-3xl font-black text-[#171717] mb-2">
-            {PRODUCTS.length} Item
+            {products.length} Item
           </div>
           <div className="flex items-center gap-1.5 text-xs font-black text-[#171717]">
             <span>{CATEGORIES.length} kategori tersedia</span>
