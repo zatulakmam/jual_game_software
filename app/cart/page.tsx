@@ -25,10 +25,12 @@ export default function CartPage() {
   const [mounted, setMounted] = useState(false);
 
   const [voucherCode, setVoucherCode] = useState('');
+  const [isValidatingVoucher, setIsValidatingVoucher] = useState(false);
   const [appliedVoucher, setAppliedVoucher] = useState<{
     code: string;
     discountType: 'percent' | 'fixed';
     value: number;
+    calculatedDiscount?: number;
   } | null>(null);
 
   useEffect(() => {
@@ -48,7 +50,9 @@ export default function CartPage() {
   // Voucher calculation
   let discountAmount = 0;
   if (appliedVoucher) {
-    if (appliedVoucher.discountType === 'percent') {
+    if (appliedVoucher.calculatedDiscount !== undefined) {
+      discountAmount = appliedVoucher.calculatedDiscount;
+    } else if (appliedVoucher.discountType === 'percent') {
       discountAmount = Math.round((subtotal * appliedVoucher.value) / 100);
     } else {
       discountAmount = appliedVoucher.value;
@@ -56,40 +60,51 @@ export default function CartPage() {
   }
   const total = Math.max(0, subtotal - discountAmount);
 
-  const handleApplyVoucher = (e: React.FormEvent) => {
+  const handleApplyVoucher = async (e: React.FormEvent) => {
     e.preventDefault();
     const code = voucherCode.trim().toUpperCase();
 
     if (!code) return;
 
-    if (code === 'PIXEL20') {
-      setAppliedVoucher({ code: 'PIXEL20', discountType: 'percent', value: 20 });
-      toast.success('Voucher diskon 20% berhasil diterapkan!', {
-        style: {
-          border: '2px solid #171717',
-          background: '#F9ED32',
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontWeight: 700,
-        },
+    setIsValidatingVoucher(true);
+    try {
+      const res = await fetch('/api/vouchers/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, subtotal }),
       });
-    } else if (code === 'NEWUSER') {
-      setAppliedVoucher({ code: 'NEWUSER', discountType: 'fixed', value: 10000 });
-      toast.success('Voucher Rp10.000 pengguna baru berhasil diterapkan!', {
-        style: {
-          border: '2px solid #171717',
-          background: '#55E6D1',
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontWeight: 700,
-        },
-      });
-    } else {
-      toast.error('Kode voucher tidak valid atau sudah kadaluarsa', {
-        style: {
-          border: '2px solid #171717',
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontWeight: 700,
-        },
-      });
+
+      const json = await res.json();
+
+      if (res.ok && json.success) {
+        setAppliedVoucher({
+          code: json.voucher.code,
+          discountType: json.voucher.discount_type === 'percentage' ? 'percent' : 'fixed',
+          value: json.voucher.discount_value,
+          calculatedDiscount: json.discountAmount,
+        });
+        toast.success(json.message || 'Voucher berhasil diterapkan!', {
+          style: {
+            border: '2px solid #171717',
+            background: '#F9ED32',
+            color: '#171717',
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 700,
+          },
+        });
+      } else {
+        toast.error(json.message || 'Kode voucher tidak valid atau sudah kadaluarsa', {
+          style: {
+            border: '2px solid #171717',
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 700,
+          },
+        });
+      }
+    } catch {
+      toast.error('Gagal memvalidasi voucher dari server.');
+    } finally {
+      setIsValidatingVoucher(false);
     }
   };
 
@@ -221,9 +236,17 @@ export default function CartPage() {
                   <button
                     onClick={() => {
                       removeItem(product.id);
-                      toast('Produk dihapus dari keranjang', { icon: '🗑️' });
+                      toast.success(`"${product.name}" dihapus dari keranjang`, {
+                        style: {
+                          border: '2px solid #171717',
+                          background: '#FF7547',
+                          color: '#FFFFFF',
+                          fontFamily: "'Space Grotesk', sans-serif",
+                          fontWeight: 700,
+                        },
+                      });
                     }}
-                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all hover-tactile"
                     title="Hapus Item"
                   >
                     <Trash2 className="w-5 h-5" />
@@ -310,9 +333,10 @@ export default function CartPage() {
                     />
                     <button
                       type="submit"
-                      className="px-4 py-2.5 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] font-black text-xs rounded-xl border-2 border-[#171717] shadow-[2px_2px_0px_#171717] active:translate-x-0.5 active:translate-y-0.5"
+                      disabled={isValidatingVoucher}
+                      className="px-4 py-2.5 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] font-black text-xs rounded-xl border-2 border-[#171717] shadow-[2px_2px_0px_#171717] active:translate-x-0.5 active:translate-y-0.5 disabled:opacity-50 hover-tactile"
                     >
-                      Terapkan
+                      {isValidatingVoucher ? 'Memeriksa...' : 'Terapkan'}
                     </button>
                   </form>
                 )}

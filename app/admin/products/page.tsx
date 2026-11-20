@@ -20,10 +20,10 @@ import toast from 'react-hot-toast';
 import { useCatalog } from '@/lib/catalog-context';
 
 export default function AdminProductsPage() {
-  const { deletedSlugs, deleteProduct } = useCatalog();
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+  const { products, isLoading, addProduct, updateProduct, deleteProduct } = useCatalog();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCat, setSelectedCat] = useState('all');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,9 +44,7 @@ export default function AdminProductsPage() {
     'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop'
   );
 
-  const visibleProducts = products.filter((product) => !deletedSlugs.has(product.slug));
-
-  const filteredProducts = visibleProducts.filter((p) => {
+  const filteredProducts = products.filter((p) => {
     const matchSearch =
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -84,11 +82,11 @@ export default function AdminProductsPage() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (slug: string, name: string) => {
+  const handleDelete = async (idOrSlug: string, name: string) => {
     if (!confirm(`Yakin ingin menghapus produk "${name}" dari katalog?`)) return;
 
     try {
-      await deleteProduct(slug);
+      await deleteProduct(idOrSlug);
       toast.success(`Produk "${name}" berhasil dihapus dari katalog`, {
         style: { border: '2px solid #171717', background: '#FF7547', color: '#fff' },
       });
@@ -97,7 +95,7 @@ export default function AdminProductsPage() {
     }
   };
 
-  const handleSaveProduct = (e: React.FormEvent) => {
+  const handleSaveProduct = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formName.trim()) {
@@ -105,61 +103,57 @@ export default function AdminProductsPage() {
       return;
     }
 
-    if (editingProduct) {
-      // Update
-      setProducts((prev) =>
-        prev.map((p) =>
-          p.id === editingProduct.id
-            ? {
-                ...p,
-                name: formName,
-                category_id: formCategory,
-                price: Number(formPrice),
-                original_price: Number(formOriginalPrice),
-                badge: formBadge,
-                description: formDesc,
-                platform: formPlatform.split(',').map((s) => s.trim()),
-                license_type: formLicense,
-                cover_image: formImage,
-              }
-            : p
-        )
-      );
-      toast.success('Produk berhasil diperbarui!');
-    } else {
-      // Create New
-      const newProduct: Product = {
-        id: `prod-${Date.now()}`,
-        name: formName,
-        slug: formName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-        description: formDesc,
-        long_description: formDesc,
-        price: Number(formPrice),
-        original_price: Number(formOriginalPrice),
-        discount_percentage: Math.round(
-          ((Number(formOriginalPrice) - Number(formPrice)) / Number(formOriginalPrice)) * 100
-        ),
-        category_id: formCategory,
-        images: [formImage],
-        cover_image: formImage,
-        features: ['Detail produk tersedia di katalog'],
-        platform: formPlatform.split(',').map((s) => s.trim()),
-        compatibility: 'Windows / Mac / Modern OS',
-        license_type: formLicense,
-        rating: 0,
-        review_count: 0,
-        sold_count: 0,
-        is_featured: true,
-        badge: formBadge,
-        tags: ['software', 'digital'],
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      };
-      setProducts((prev) => [newProduct, ...prev]);
-      toast.success('Produk baru berhasil ditambahkan ke katalog!');
+    setIsSubmitting(true);
+    try {
+      if (editingProduct) {
+        await updateProduct(editingProduct.id, {
+          name: formName,
+          category_id: formCategory,
+          price: Number(formPrice),
+          original_price: Number(formOriginalPrice),
+          discount_percentage: Number(formOriginalPrice) > Number(formPrice)
+            ? Math.round(((Number(formOriginalPrice) - Number(formPrice)) / Number(formOriginalPrice)) * 100)
+            : 0,
+          badge: formBadge,
+          description: formDesc,
+          long_description: formDesc,
+          platform: formPlatform.split(',').map((s) => s.trim()).filter(Boolean),
+          license_type: formLicense,
+          cover_image: formImage,
+          images: [formImage],
+        });
+        toast.success(`Produk "${formName}" berhasil diperbarui!`, {
+          style: { border: '2px solid #171717', background: '#55E6D1', color: '#171717' },
+        });
+      } else {
+        await addProduct({
+          name: formName,
+          category_id: formCategory,
+          price: Number(formPrice),
+          original_price: Number(formOriginalPrice),
+          discount_percentage: Number(formOriginalPrice) > Number(formPrice)
+            ? Math.round(((Number(formOriginalPrice) - Number(formPrice)) / Number(formOriginalPrice)) * 100)
+            : 0,
+          badge: formBadge,
+          description: formDesc,
+          long_description: formDesc,
+          platform: formPlatform.split(',').map((s) => s.trim()).filter(Boolean),
+          license_type: formLicense,
+          cover_image: formImage,
+          images: [formImage],
+          compatibility: 'Windows / Mac / Modern OS',
+          features: ['Lisensi original 100%', 'Garansi aktivasi seumur hidup', 'Download instan'],
+        });
+        toast.success(`Produk "${formName}" berhasil disimpan ke database!`, {
+          style: { border: '2px solid #171717', background: '#F9ED32', color: '#171717' },
+        });
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Gagal menyimpan produk.');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsModalOpen(false);
   };
 
   return (
@@ -171,7 +165,7 @@ export default function AdminProductsPage() {
             MANAJEMEN KATALOG
           </div>
           <h1 className="text-3xl font-black text-[#171717] uppercase tracking-tight">
-            KELOLA PRODUK DIGITAL ({visibleProducts.length})
+            KELOLA PRODUK DIGITAL ({products.length})
           </h1>
         </div>
 
@@ -440,9 +434,10 @@ export default function AdminProductsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] rounded-xl border-2 border-[#171717] shadow-[2px_2px_0px_#171717] font-black uppercase tracking-wider"
+                  disabled={isSubmitting}
+                  className="px-6 py-2.5 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] rounded-xl border-2 border-[#171717] shadow-[2px_2px_0px_#171717] font-black uppercase tracking-wider disabled:opacity-50 transition-all hover-tactile"
                 >
-                  Simpan Produk
+                  {isSubmitting ? 'Menyimpan...' : 'Simpan Produk'}
                 </button>
               </div>
             </form>

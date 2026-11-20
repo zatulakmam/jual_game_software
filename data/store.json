@@ -1,0 +1,524 @@
+{
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "Windows 11 Pro License",
+      "slug": "windows-11-pro-license",
+      "description": "Lisensi Windows 11 Pro. Cek spesifikasi dan ketentuan lisensi sebelum membeli.",
+      "long_description": "Lisensi Windows 11 Pro dengan fitur BitLocker, Remote Desktop, Hyper-V, dan Windows Hello for Business. Periksa persyaratan kompatibilitas serta ketentuan lisensi sebelum membeli.",
+      "price": 85000,
+      "original_price": 120000,
+      "discount_percentage": 29,
+      "category_id": "cat-1",
+      "images": [
+        "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1587580601548-3f8a4f7bf218?w=800&h=600&fit=crop"
+      ],
+      "cover_image": "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=300&fit=crop",
+      "features": [
+        "Lisensi Windows 11 Pro",
+        "Aktivasi sesuai ketentuan lisensi",
+        "BitLocker dan Hyper-V",
+        "Dukungan Remote Desktop"
+      ],
+      "platform": [
+        "Windows"
+      ],
+      "compatibility": "Windows 11 Pro (64-bit), memerlukan TPM 2.0",
+      "license_type": "Seumur Lisensi",
+      "rating": 0,
+      "review_count": 0,
+      "sold_count": 0,
+      "is_featured": true,
+      "tags": [
+        "windows",
+        "microsoft",
+        "os",
+        "license",
+        "software"
+      ],
+      "file_size": "Tidak berlaku (lisensi digital)",
+      "version": "23H2",
+      "created_at": "2024-01-15T00:00:00Z",
+      "updated_at": "2024-10-01T00:00:00Z"
+    },
+    {
+      "id": "prod-2",
+      "name": "Minecraft Java Edition",
+      "slug": "minecraft-java-edition",
+      "description": "Bangun, jelajahi, dan bertahan hidup di dunia terbuka Minecraft Java Edition.",
+      "long_description": "Minecraft Java Edition adalah game sandbox untuk membangun dunia, menjelajahi berbagai tempat, dan bermain bersama melalui server multiplayer. Mendukung mod, texture pack, dan peta buatan komunitas.",
+      "price": 120000,
+      "category_id": "cat-2",
+      "images": [
+        "https://images.unsplash.com/photo-1587573089344-9f7f3c1024f1?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=800&h=600&fit=crop"
+      ],
+      "cover_image": "https://images.unsplash.com/photo-1587573089344-9f7f3c1024f1?w=400&h=300&fit=crop",
+      "features": [
+        "Akses Minecraft Java Edition",
+        "Dukungan mod komunitas",
+        "Server multiplayer",
+        "Bermain bersama pengguna Java Edition"
+      ],
+      "platform": [
+        "Windows",
+        "macOS",
+        "Linux"
+      ],
+      "compatibility": "Memerlukan Java 17 atau versi lebih baru",
+      "license_type": "Akun Seumur Lisensi",
+      "rating": 0,
+      "review_count": 0,
+      "sold_count": 0,
+      "is_featured": true,
+      "tags": [
+        "minecraft",
+        "games",
+        "java",
+        "sandbox",
+        "mojang"
+      ],
+      "file_size": "1.2 GB",
+      "version": "1.21.4",
+      "created_at": "2024-02-10T00:00:00Z",
+      "updated_at": "2024-11-01T00:00:00Z"
+    },
+    {
+      "id": "prod-3",
+      "name": "Adobe Creative Assets Bundle",
+      "slug": "adobe-creative-assets-bundle",
+      "description": "Paket aset desain yang kompatibel dengan Adobe, seperti brush, font, mockup, dan template.",
+      "long_description": "Paket aset ini mencakup brush Photoshop, aset vektor Illustrator, preset After Effects, transisi Premiere Pro, LUT untuk color grading, dan template mockup. Periksa detail lisensi serta kompatibilitas sebelum menggunakan aset.",
+      "price": 45000,
+      "original_price": 89000,
+      "discount_percentage": 49,
+      "category_id": "cat-5",
+      "images": [
+        "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&h=600&fit=crop"
+      ],
+      "cover_image": "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=300&fit=crop",
+      "features": [
+        "Aset untuk Photoshop",
+        "Paket vektor Illustrator",
+        "Preset dan transisi After Effects",
+        "Template mockup",
+        "Periksa ketentuan lisensi komersial"
+      ],
+      "platform": [
+        "Windows",
+        "macOS"
+      ],
+      "compatibility": "Adobe CC 2023 atau versi lebih baru",
+      "license_type": "Lisensi Komersial",
+      "rating": 0,
+      "review_count": 0,
+      "sold_count": 0,
+      "is_featured": true,
+      "badge": "sale",
+      "tags": [
+        "adobe",
+        "design",
+        "assets",
+        "photoshop",
+        "illustrator",
+        "creative"
+      ],
+      "file_size": "2.4 GB",
+      "version": "2024 Edition",
+      "created_at": "2024-03-05T00:00:00Z",
+      "updated_at": "2024-09-15T00:00:00Z"
+    },
+    {
+      "id": "prod-4",
+      "name": "FL Studio Producer Edition",
+      "slug": "fl-studio-producer-edition",
+      "description": "DAW untuk produksi musik, rekaman, mixing, dan pengolahan audio.",
+      "long_description": "FL Studio Producer Edition adalah aplikasi produksi audio untuk membuat beat, merekam vokal, mixing, dan mastering. Fitur yang tercantum pada produk meliputi piano roll, mixer, step sequencer, instrumen, dan efek.",
+      "price": 75000,
+      "category_id": "cat-1",
+      "images": [
+        "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1619983081563-430f63602796?w=800&h=600&fit=crop"
+      ],
+      "cover_image": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=300&fit=crop",
+      "features": [
+        "FL Studio Producer Edition",
+        "Plugin bawaan",
+        "Piano roll",
+        "Rekaman multi-track",
+        "Dukungan VST2/VST3"
+      ],
+      "platform": [
+        "Windows",
+        "macOS"
+      ],
+      "compatibility": "Windows 10/11 atau macOS 10.15 ke atas",
+      "license_type": "Lisensi Seumur Lisensi",
+      "rating": 0,
+      "review_count": 0,
+      "sold_count": 0,
+      "is_featured": false,
+      "badge": "new-arrival",
+      "tags": [
+        "fl studio",
+        "daw",
+        "music",
+        "production",
+        "beats",
+        "audio"
+      ],
+      "file_size": "4.1 GB",
+      "version": "24.1.2",
+      "created_at": "2024-10-20T00:00:00Z",
+      "updated_at": "2024-11-01T00:00:00Z"
+    },
+    {
+      "id": "prod-5",
+      "name": "Stardew Valley",
+      "slug": "stardew-valley",
+      "description": "Bangun pertanian impianmu di game RPG simulasi bertani ini.",
+      "long_description": "Stardew Valley adalah game RPG simulasi bertani. Kelola lahan, tanam tanaman, pelihara hewan, memancing, menambang, membuat barang, dan jelajahi Pelican Town. Game ini juga menyediakan mode multiplayer.",
+      "price": 55000,
+      "category_id": "cat-2",
+      "images": [
+        "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=800&h=600&fit=crop"
+      ],
+      "cover_image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop",
+      "features": [
+        "Game RPG bertema pertanian",
+        "Mode kerja sama hingga 4 pemain",
+        "Dukungan mod",
+        "Dukungan controller",
+        "Periksa konten DLC pada detail produk"
+      ],
+      "platform": [
+        "Windows",
+        "macOS",
+        "Linux"
+      ],
+      "compatibility": "Windows 7 atau lebih baru, RAM 2 GB",
+      "license_type": "Kunci Steam",
+      "rating": 0,
+      "review_count": 0,
+      "sold_count": 0,
+      "is_featured": true,
+      "tags": [
+        "stardew",
+        "farm",
+        "rpg",
+        "indie",
+        "steam",
+        "coop"
+      ],
+      "file_size": "500 MB",
+      "version": "1.6.8",
+      "created_at": "2024-01-30T00:00:00Z",
+      "updated_at": "2024-10-15T00:00:00Z"
+    },
+    {
+      "id": "prod-6",
+      "name": "Productivity Notion Template",
+      "slug": "productivity-notion-template",
+      "description": "Template workspace Notion untuk mengatur tugas, target, kebiasaan, dan keuangan.",
+      "long_description": "Template Notion ini menyediakan halaman untuk manajemen tugas, target, kebiasaan, anggaran, daftar bacaan, proyek, serta evaluasi mingguan dan bulanan. Periksa isi paket dan cara penggunaan pada detail produk.",
+      "price": 25000,
+      "category_id": "cat-6",
+      "images": [
+        "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1517842645767-c639042777db?w=800&h=600&fit=crop"
+      ],
+      "cover_image": "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=300&fit=crop",
+      "features": [
+        "Database yang saling terhubung",
+        "Manajemen tugas dan proyek",
+        "Pelacak kebiasaan dan target",
+        "Pengelolaan anggaran",
+        "Panduan penggunaan"
+      ],
+      "platform": [
+        "Web",
+        "Windows",
+        "macOS",
+        "iOS",
+        "Android"
+      ],
+      "compatibility": "Notion (paket gratis atau berbayar)",
+      "license_type": "Lisensi Pribadi",
+      "rating": 0,
+      "review_count": 0,
+      "sold_count": 0,
+      "is_featured": true,
+      "tags": [
+        "notion",
+        "productivity",
+        "template",
+        "second brain",
+        "planner"
+      ],
+      "file_size": "Tidak berlaku (template Notion)",
+      "version": "3.0",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-08-20T00:00:00Z"
+    },
+    {
+      "id": "prod-7",
+      "name": "Developer Toolkit Bundle",
+      "slug": "developer-toolkit-bundle",
+      "description": "Paket tools developer yang mencakup utilitas CLI, template, dan pustaka kode.",
+      "long_description": "Paket Developer Toolkit berisi tools CLI, kumpulan ekstensi VS Code, template GitHub Actions dan Docker, contoh pipeline CI/CD, tools database, serta kumpulan catatan referensi developer. Periksa daftar item dan masa akses pada detail produk.",
+      "price": 65000,
+      "category_id": "cat-4",
+      "images": [
+        "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop"
+      ],
+      "cover_image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
+      "features": [
+        "Kumpulan ekstensi VS Code",
+        "Template GitHub Actions",
+        "Template konfigurasi Docker",
+        "Contoh pipeline CI/CD",
+        "Tools database dan catatan referensi"
+      ],
+      "platform": [
+        "Windows",
+        "macOS",
+        "Linux"
+      ],
+      "compatibility": "Lintas platform, disarankan Node.js 18 ke atas",
+      "license_type": "Lisensi 1 Tahun",
+      "rating": 0,
+      "review_count": 0,
+      "sold_count": 0,
+      "is_featured": false,
+      "badge": "new-arrival",
+      "tags": [
+        "developer",
+        "tools",
+        "api",
+        "cli",
+        "vscode",
+        "devops"
+      ],
+      "file_size": "890 MB",
+      "version": "2024.1",
+      "created_at": "2024-10-01T00:00:00Z",
+      "updated_at": "2024-11-05T00:00:00Z"
+    },
+    {
+      "id": "prod-8",
+      "name": "Wallpaper Premium Pack",
+      "slug": "wallpaper-premium-pack",
+      "description": "Paket wallpaper ultra-HD dengan tema abstrak, alam, neon, minimalis, dan lainnya.",
+      "long_description": "Paket wallpaper ultra-HD dengan resolusi 4K dan 8K. Pilihan tema mencakup abstrak, neon, minimalis, alam, luar angkasa, arsitektur, mode gelap, dan pastel. Periksa ketentuan penggunaan sebelum memakai gambar.",
+      "price": 15000,
+      "category_id": "cat-5",
+      "images": [
+        "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&h=600&fit=crop",
+        "https://images.unsplash.com/photo-1534796636912-3b952d9168d8?w=800&h=600&fit=crop"
+      ],
+      "cover_image": "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&h=300&fit=crop",
+      "features": [
+        "Wallpaper ultra-HD",
+        "Resolusi 4K dan 8K",
+        "Beragam tema",
+        "Ketentuan penggunaan pribadi",
+        "Folder berdasarkan tema"
+      ],
+      "platform": [
+        "Windows",
+        "macOS",
+        "Linux",
+        "iOS",
+        "Android"
+      ],
+      "compatibility": "Dapat digunakan di berbagai perangkat",
+      "license_type": "Lisensi Penggunaan Pribadi",
+      "rating": 0,
+      "review_count": 0,
+      "sold_count": 0,
+      "is_featured": false,
+      "tags": [
+        "wallpaper",
+        "design",
+        "4k",
+        "8k",
+        "backgrounds",
+        "aesthetic"
+      ],
+      "file_size": "8.5 GB",
+      "version": "2024 Pack",
+      "created_at": "2024-01-10T00:00:00Z",
+      "updated_at": "2024-07-01T00:00:00Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Software & Aplikasi",
+      "slug": "software",
+      "description": "Software untuk produktivitas, kerja, dan kebutuhan harian",
+      "icon": "Monitor",
+      "color": "#F9ED32",
+      "bg_color": "#171717",
+      "product_count": 2
+    },
+    {
+      "id": "cat-2",
+      "name": "Game PC",
+      "slug": "games",
+      "description": "Game digital untuk dimainkan di PC",
+      "icon": "Gamepad2",
+      "color": "#FF7547",
+      "bg_color": "#1a0a00",
+      "product_count": 2
+    },
+    {
+      "id": "cat-3",
+      "name": "Produktivitas",
+      "slug": "productivity",
+      "description": "Tools untuk bantu pekerjaan dan alur kerja",
+      "icon": "Zap",
+      "color": "#55E6D1",
+      "bg_color": "#001a17",
+      "product_count": 0
+    },
+    {
+      "id": "cat-4",
+      "name": "Tools Developer",
+      "slug": "developer",
+      "description": "SDK, API, dan utilitas untuk developer",
+      "icon": "Code2",
+      "color": "#A78BFA",
+      "bg_color": "#0d0020",
+      "product_count": 1
+    },
+    {
+      "id": "cat-5",
+      "name": "Aset Desain",
+      "slug": "design",
+      "description": "Font, ikon, UI kit, dan aset desain lainnya",
+      "icon": "Palette",
+      "color": "#FF7547",
+      "bg_color": "#1a0500",
+      "product_count": 2
+    },
+    {
+      "id": "cat-6",
+      "name": "Template Digital",
+      "slug": "templates",
+      "description": "Template siap pakai untuk berbagai kebutuhan",
+      "icon": "FileText",
+      "color": "#F9ED32",
+      "bg_color": "#1a1700",
+      "product_count": 1
+    },
+    {
+      "id": "cat-7",
+      "name": "Utilitas & Plugin",
+      "slug": "utilities",
+      "description": "Ekstensi browser dan utilitas sistem",
+      "icon": "Puzzle",
+      "color": "#55E6D1",
+      "bg_color": "#001715",
+      "product_count": 0
+    }
+  ],
+  "orders": [
+    {
+      "id": "PS-992102",
+      "user_id": "guest",
+      "items": [
+        {
+          "id": "item-1",
+          "order_id": "PS-992102",
+          "product": {
+            "id": "prod-1",
+            "name": "Windows 11 Pro License",
+            "slug": "windows-11-pro-license",
+            "description": "Lisensi Windows 11 Pro. Cek spesifikasi dan ketentuan lisensi sebelum membeli.",
+            "long_description": "Lisensi Windows 11 Pro dengan fitur BitLocker, Remote Desktop, Hyper-V, dan Windows Hello for Business. Periksa persyaratan kompatibilitas serta ketentuan lisensi sebelum membeli.",
+            "price": 85000,
+            "original_price": 120000,
+            "discount_percentage": 29,
+            "category_id": "cat-1",
+            "images": [
+              "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=800&h=600&fit=crop",
+              "https://images.unsplash.com/photo-1587580601548-3f8a4f7bf218?w=800&h=600&fit=crop"
+            ],
+            "cover_image": "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=300&fit=crop",
+            "features": [
+              "Lisensi Windows 11 Pro",
+              "Aktivasi sesuai ketentuan lisensi",
+              "BitLocker dan Hyper-V",
+              "Dukungan Remote Desktop"
+            ],
+            "platform": [
+              "Windows"
+            ],
+            "compatibility": "Windows 11 Pro (64-bit), memerlukan TPM 2.0",
+            "license_type": "Seumur Lisensi",
+            "rating": 0,
+            "review_count": 0,
+            "sold_count": 0,
+            "is_featured": true,
+            "tags": [
+              "windows",
+              "microsoft",
+              "os",
+              "license",
+              "software"
+            ],
+            "file_size": "Tidak berlaku (lisensi digital)",
+            "version": "23H2",
+            "created_at": "2024-01-15T00:00:00Z",
+            "updated_at": "2024-10-01T00:00:00Z"
+          },
+          "quantity": 1,
+          "price": 85000,
+          "license_key": "W269N-WFGWX-YVC9B-4J6C9-T83GX",
+          "download_url": "https://www.microsoft.com/software-download/windows11"
+        }
+      ],
+      "total": 85000,
+      "discount_amount": 0,
+      "payment_method": "QRIS",
+      "payment_status": "paid",
+      "status": "completed",
+      "created_at": "2026-11-20T04:17:37.307Z",
+      "updated_at": "2026-11-20T04:17:37.309Z"
+    }
+  ],
+  "vouchers": [
+    {
+      "id": "v-1",
+      "code": "PIXEL20",
+      "discount_type": "percentage",
+      "discount_value": 20,
+      "min_purchase": 50000,
+      "used_count": 142,
+      "is_active": true
+    },
+    {
+      "id": "v-2",
+      "code": "NEWUSER",
+      "discount_type": "fixed",
+      "discount_value": 10000,
+      "min_purchase": 25000,
+      "used_count": 89,
+      "is_active": true
+    },
+    {
+      "id": "v-3",
+      "code": "SINZO50",
+      "discount_type": "percentage",
+      "discount_value": 50,
+      "min_purchase": 100000,
+      "used_count": 24,
+      "is_active": true
+    }
+  ]
+}

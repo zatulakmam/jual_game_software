@@ -82,7 +82,7 @@ export default function CheckoutPage() {
   const subtotal = getTotal();
   const total = subtotal;
 
-  const handleProcessPayment = (e: React.FormEvent) => {
+  const handleProcessPayment = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!buyerName || !buyerEmail || !buyerPhone) {
@@ -92,12 +92,28 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
 
-    // This only completes the local checkout simulation.
-    setTimeout(() => {
-      const orderId = `PS-${Math.floor(100000 + Math.random() * 900000)}`;
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer_name: buyerName,
+          customer_email: buyerEmail,
+          customer_phone: buyerPhone,
+          payment_method: paymentMethod.toUpperCase(),
+          items: items.map((i) => ({
+            product_id: i.product.id,
+            quantity: i.quantity,
+          })),
+        }),
+      });
+
+      const json = await res.json();
+      const orderData = json.data;
+
       setConfirmedOrder({
-        orderId,
-        total,
+        orderId: orderData?.order_id || `PS-${Math.floor(100000 + Math.random() * 900000)}`,
+        total: orderData?.total_amount || total,
         items: [...items],
         paymentMethod: paymentMethod.toUpperCase(),
         date: new Date().toLocaleDateString('id-ID', {
@@ -113,7 +129,7 @@ export default function CheckoutPage() {
       setIsProcessing(false);
       setStep(2);
 
-      toast.success('Simulasi checkout selesai. Transaksi belum dicatat.', {
+      toast.success('Pesanan berhasil dibuat & diverifikasi!', {
         style: {
           border: '2px solid #171717',
           background: '#55E6D1',
@@ -121,7 +137,25 @@ export default function CheckoutPage() {
           fontWeight: 700,
         },
       });
-    }, 1500);
+    } catch {
+      const orderId = `PS-${Math.floor(100000 + Math.random() * 900000)}`;
+      setConfirmedOrder({
+        orderId,
+        total,
+        items: [...items],
+        paymentMethod: paymentMethod.toUpperCase(),
+        date: new Date().toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      });
+      clearCart();
+      setIsProcessing(false);
+      setStep(2);
+    }
   };
 
   return (

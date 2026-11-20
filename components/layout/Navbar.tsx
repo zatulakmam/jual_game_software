@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Menu, X, ChevronDown, User, Search, LogOut } from 'lucide-react';
+import { ShoppingCart, Menu, X, ChevronDown, User, Search, LogOut, Sun, Moon } from 'lucide-react';
 import SearchBar from '@/components/ui/SearchBar';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { createClient } from '@/lib/supabase';
 import { getUserDisplayName, useCurrentUser } from '@/lib/useCurrentUser';
+import { useTheme } from '@/components/theme/ThemeProvider';
 
 const CATEGORIES = [
   { name: 'Software', slug: 'software' },
@@ -28,6 +29,7 @@ export const Navbar: React.FC = () => {
   const router = useRouter();
   const user = useCurrentUser();
   const userName = user ? getUserDisplayName(user) : '';
+  const { theme, toggleTheme } = useTheme();
 
   const handleSignOut = async () => {
     try {
@@ -76,7 +78,7 @@ export const Navbar: React.FC = () => {
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
-      router.push(`/explore?q=${encodeURIComponent(query)}`);
+      router.push(`/products?q=${encodeURIComponent(query)}`);
       setSearchOpen(false);
     }
   };
@@ -85,11 +87,11 @@ export const Navbar: React.FC = () => {
     fontFamily: "'Space Grotesk', sans-serif",
     fontWeight: 700,
     fontSize: '14px',
-    color: '#171717',
+    color: 'var(--brand-black)',
     textDecoration: 'none',
     padding: '6px 8px',
     borderRadius: '6px',
-    transition: 'background 0.15s',
+    transition: 'background 0.15s, color 0.15s',
     display: 'flex',
     alignItems: 'center',
     gap: 4,
@@ -103,9 +105,10 @@ export const Navbar: React.FC = () => {
           position: 'sticky',
           top: 0,
           zIndex: 100,
-          backgroundColor: '#F5F0E8',
-          borderBottom: '2px solid #171717',
+          backgroundColor: 'var(--brand-bg)',
+          borderBottom: '2px solid var(--brand-black)',
           fontFamily: "'Space Grotesk', sans-serif",
+          transition: 'background-color 0.2s ease, border-color 0.2s ease',
         }}
       >
         <div
@@ -126,8 +129,8 @@ export const Navbar: React.FC = () => {
                 width: 36,
                 height: 36,
                 backgroundColor: '#F9ED32',
-                border: '2px solid #171717',
-                boxShadow: '2px 2px 0px #171717',
+                border: '2px solid var(--brand-black)',
+                boxShadow: '2px 2px 0px var(--brand-black)',
                 borderRadius: '6px',
                 display: 'flex',
                 alignItems: 'center',
@@ -137,17 +140,17 @@ export const Navbar: React.FC = () => {
                 color: '#171717',
               }}
             >
-              SS
+              PS
             </div>
-            <span style={{ fontWeight: 900, fontSize: '20px', color: '#171717', letterSpacing: '-0.5px' }}>
-              Sinzo Store
+            <span style={{ fontWeight: 900, fontSize: '20px', color: 'var(--brand-black)', letterSpacing: '-0.5px' }}>
+              PixelStore
             </span>
           </Link>
 
           {/* Desktop nav links */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 1, minWidth: 0 }} className="hidden-mobile">
             <Link href="/" style={navLinkStyle} className="nav-link">Beranda</Link>
-            <Link href="/explore" style={navLinkStyle} className="nav-link">Jelajahi</Link>
+            <Link href="/products" style={navLinkStyle} className="nav-link">Jelajahi</Link>
 
             {/* Categories dropdown */}
             <div ref={categoryRef} style={{ position: 'relative' }}>
@@ -163,9 +166,9 @@ export const Navbar: React.FC = () => {
                     position: 'absolute',
                     top: 'calc(100% + 8px)',
                     left: 0,
-                    backgroundColor: '#F5F0E8',
-                    border: '2px solid #171717',
-                    boxShadow: '4px 4px 0px #171717',
+                    backgroundColor: 'var(--brand-bg)',
+                    border: '2px solid var(--brand-black)',
+                    boxShadow: '4px 4px 0px var(--brand-black)',
                     borderRadius: '8px',
                     minWidth: 200,
                     overflow: 'hidden',
@@ -182,14 +185,14 @@ export const Navbar: React.FC = () => {
                         fontFamily: "'Space Grotesk', sans-serif",
                         fontWeight: 600,
                         fontSize: '14px',
-                        color: '#171717',
+                        color: 'var(--brand-black)',
                         textDecoration: 'none',
-                        borderBottom: '1px solid #E5E7EB',
+                        borderBottom: '1px solid rgba(128,128,128,0.2)',
                         transition: 'background 0.1s',
                       }}
                       onClick={() => setCategoryOpen(false)}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = '#F9ED32'; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent'; }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = '#F9ED32'; (e.currentTarget as HTMLElement).style.color = '#171717'; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'var(--brand-black)'; }}
                     >
                       {cat.name}
                     </Link>
@@ -198,7 +201,7 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            <Link href="/purchases" style={navLinkStyle} className="nav-link">Pembelian Saya</Link>
+            <Link href="/dashboard" style={navLinkStyle} className="nav-link">Pembelian Saya</Link>
           </div>
 
           {/* Search - desktop */}
@@ -207,10 +210,33 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Right side actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 'auto', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginLeft: 'auto', flexShrink: 0 }}>
+            {/* Theme Toggle Button (Light / Dark) */}
+            <button
+              onClick={toggleTheme}
+              aria-label={`Ganti ke mode ${theme === 'dark' ? 'terang' : 'gelap'}`}
+              title={`Mode ${theme === 'dark' ? 'Terang' : 'Gelap'}`}
+              className="hover-tactile"
+              style={{
+                width: 38,
+                height: 38,
+                border: '2px solid var(--brand-black)',
+                boxShadow: '2px 2px 0px var(--brand-black)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: theme === 'dark' ? '#F9ED32' : '#A78BFA',
+                color: '#171717',
+                cursor: 'pointer',
+              }}
+            >
+              {theme === 'dark' ? <Sun size={19} /> : <Moon size={19} />}
+            </button>
+
             {/* Mobile search toggle */}
             <button
-              style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'none', color: '#171717' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'none', color: 'var(--brand-black)' }}
               className="show-mobile"
               onClick={() => setSearchOpen((o) => !o)}
               aria-label="Cari produk"
@@ -219,21 +245,22 @@ export const Navbar: React.FC = () => {
             </button>
 
             {/* Cart */}
-            <Link href="/cart" style={{ position: 'relative', display: 'flex', alignItems: 'center', color: '#171717' }}>
+            <Link href="/cart" style={{ position: 'relative', display: 'flex', alignItems: 'center', color: 'var(--brand-black)' }}>
               <div
                 style={{
-                  width: 40,
-                  height: 40,
-                  border: '2px solid #171717',
-                  boxShadow: '2px 2px 0px #171717',
+                  width: 38,
+                  height: 38,
+                  border: '2px solid var(--brand-black)',
+                  boxShadow: '2px 2px 0px var(--brand-black)',
                   borderRadius: '8px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: '#ffffff',
+                  backgroundColor: 'var(--brand-surface)',
+                  color: 'var(--brand-black)',
                 }}
               >
-                <ShoppingCart size={20} />
+                <ShoppingCart size={19} />
               </div>
               {cartCount > 0 && (
                 <span
@@ -244,11 +271,11 @@ export const Navbar: React.FC = () => {
                     minWidth: 20,
                     height: 20,
                     backgroundColor: '#FF7547',
-                    border: '1.5px solid #171717',
+                    border: '1.5px solid var(--brand-black)',
                     borderRadius: '999px',
                     fontSize: '11px',
                     fontWeight: 800,
-                    color: '#171717',
+                    color: '#FFFFFF',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -331,15 +358,15 @@ export const Navbar: React.FC = () => {
             <button
               style={{
                 background: 'none',
-                border: '2px solid #171717',
+                border: '2px solid var(--brand-black)',
                 borderRadius: '6px',
-                width: 40,
-                height: 40,
+                width: 38,
+                height: 38,
                 cursor: 'pointer',
                 display: 'none',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#171717',
+                color: 'var(--brand-black)',
               }}
               className="show-mobile"
               onClick={() => setMobileOpen((o) => !o)}
@@ -352,7 +379,7 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile search bar */}
         {searchOpen && (
-          <div style={{ padding: '12px 24px', borderTop: '1px solid #E5E7EB' }} className="show-mobile">
+          <div style={{ padding: '12px 24px', borderTop: '1px solid rgba(128,128,128,0.2)' }} className="show-mobile">
             <SearchBar placeholder="Cari produk..." onSearch={handleSearch} />
           </div>
         )}
@@ -361,17 +388,17 @@ export const Navbar: React.FC = () => {
         {mobileOpen && (
           <div
             style={{
-              borderTop: '2px solid #171717',
-              backgroundColor: '#F5F0E8',
+              borderTop: '2px solid var(--brand-black)',
+              backgroundColor: 'var(--brand-bg)',
               padding: '16px 24px',
             }}
-            className="show-mobile"
+            className="show-mobile animate-pop"
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {[
                 { label: 'Beranda', href: '/' },
-                { label: 'Jelajahi', href: '/explore' },
-                { label: 'Pembelian Saya', href: '/purchases' },
+                { label: 'Jelajahi Produk', href: '/products' },
+                { label: 'Pembelian Saya', href: '/dashboard' },
               ].map((link) => (
                 <Link
                   key={link.href}
@@ -381,9 +408,9 @@ export const Navbar: React.FC = () => {
                     fontFamily: "'Space Grotesk', sans-serif",
                     fontWeight: 700,
                     fontSize: '16px',
-                    color: '#171717',
+                    color: 'var(--brand-black)',
                     textDecoration: 'none',
-                    borderBottom: '1px solid #E5E7EB',
+                    borderBottom: '1px solid rgba(128,128,128,0.2)',
                   }}
                   onClick={() => setMobileOpen(false)}
                 >
@@ -391,7 +418,7 @@ export const Navbar: React.FC = () => {
                 </Link>
               ))}
               <div style={{ paddingTop: 8 }}>
-                <p style={{ fontWeight: 700, fontSize: '13px', color: '#6B7280', textTransform: 'uppercase', marginBottom: 8 }}>Kategori</p>
+                <p style={{ fontWeight: 700, fontSize: '13px', color: '#888888', textTransform: 'uppercase', marginBottom: 8 }}>Kategori</p>
                 {CATEGORIES.map((cat) => (
                   <Link
                     key={cat.slug}
@@ -402,9 +429,9 @@ export const Navbar: React.FC = () => {
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontWeight: 600,
                       fontSize: '15px',
-                      color: '#171717',
+                      color: 'var(--brand-black)',
                       textDecoration: 'none',
-                      borderBottom: '1px solid #F3F4F6',
+                      borderBottom: '1px solid rgba(128,128,128,0.15)',
                     }}
                     onClick={() => setMobileOpen(false)}
                   >
@@ -416,7 +443,7 @@ export const Navbar: React.FC = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingTop: 16 }}>
                   <Link
                     href="/dashboard"
-                    style={{ ...navLinkStyle, padding: '12px 0', borderBottom: '1px solid #E5E7EB' }}
+                    style={{ ...navLinkStyle, padding: '12px 0', borderBottom: '1px solid rgba(128,128,128,0.2)' }}
                     onClick={() => setMobileOpen(false)}
                   >
                     <User size={18} />
@@ -424,7 +451,7 @@ export const Navbar: React.FC = () => {
                   </Link>
                   <button
                     onClick={handleSignOut}
-                    style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 0', border: 'none', background: 'none', color: '#171717', font: 'inherit', fontWeight: 700, cursor: 'pointer' }}
+                    style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 0', border: 'none', background: 'none', color: 'var(--brand-black)', font: 'inherit', fontWeight: 700, cursor: 'pointer' }}
                   >
                     <LogOut size={18} />
                     Keluar
@@ -438,12 +465,12 @@ export const Navbar: React.FC = () => {
                       flex: 1,
                       textAlign: 'center',
                       padding: '12px',
-                      border: '2px solid #171717',
+                      border: '2px solid var(--brand-black)',
                       borderRadius: '6px',
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontWeight: 700,
                       fontSize: '15px',
-                      color: '#171717',
+                      color: 'var(--brand-black)',
                       textDecoration: 'none',
                     }}
                     onClick={() => setMobileOpen(false)}
@@ -456,7 +483,7 @@ export const Navbar: React.FC = () => {
                       flex: 1,
                       textAlign: 'center',
                       padding: '12px',
-                      border: '2px solid #171717',
+                      border: '2px solid var(--brand-black)',
                       borderRadius: '6px',
                       fontFamily: "'Space Grotesk', sans-serif",
                       fontWeight: 700,
@@ -464,7 +491,7 @@ export const Navbar: React.FC = () => {
                       color: '#171717',
                       textDecoration: 'none',
                       backgroundColor: '#F9ED32',
-                      boxShadow: '2px 2px 0px #171717',
+                      boxShadow: '2px 2px 0px var(--brand-black)',
                     }}
                     onClick={() => setMobileOpen(false)}
                   >

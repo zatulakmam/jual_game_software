@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Package,
@@ -12,6 +13,22 @@ import { useCatalog } from '@/lib/catalog-context';
 
 export default function AdminDashboardPage() {
   const { products } = useCatalog();
+  const [orders, setOrders] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/orders')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && Array.isArray(json.data)) {
+          setOrders(json.data);
+        }
+      })
+      .catch((e) => console.error(e));
+  }, []);
+
+  const totalRevenue = orders.reduce((sum, o) => sum + (o.total_amount || 0), 0);
+  const totalOrders = orders.length;
+  const uniqueCustomers = new Set(orders.map((o) => o.customer_email)).size;
 
   return (
     <div className="p-6 lg:p-10 space-y-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -29,7 +46,7 @@ export default function AdminDashboardPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/products"
-            className="px-5 py-2.5 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] font-black text-xs rounded-xl border-2 border-[#171717] shadow-[3px_3px_0px_#171717] uppercase tracking-wider"
+            className="px-5 py-2.5 bg-[#F9ED32] hover:bg-[#ffe500] text-[#171717] font-black text-xs rounded-xl border-2 border-[#171717] shadow-[3px_3px_0px_#171717] uppercase tracking-wider hover-tactile"
           >
             + Tambah Produk Baru
           </Link>
@@ -39,7 +56,7 @@ export default function AdminDashboardPage() {
       {/* ================= 4 KPI STATS CARDS ================= */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Card 1: Total Revenue */}
-        <div className="bg-[#F9ED32] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717]">
+        <div className="bg-[#F9ED32] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover-tactile">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-black uppercase text-[#171717] tracking-wider">
               Total Pendapatan
@@ -49,15 +66,15 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="text-2xl lg:text-3xl font-black text-[#171717] mb-2">
-            {formatPrice(0)}
+            {formatPrice(totalRevenue)}
           </div>
           <div className="text-xs font-black text-green-900">
-            Belum ada transaksi
+            {totalOrders > 0 ? `${totalOrders} transaksi berhasil` : 'Belum ada transaksi'}
           </div>
         </div>
 
         {/* Card 2: Total Products */}
-        <div className="bg-[#A78BFA] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717]">
+        <div className="bg-[#A78BFA] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover-tactile">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-black uppercase text-[#171717] tracking-wider">
               Total Produk Digital
@@ -68,12 +85,12 @@ export default function AdminDashboardPage() {
             {products.length} Item
           </div>
           <div className="flex items-center gap-1.5 text-xs font-black text-[#171717]">
-            <span>{CATEGORIES.length} kategori tersedia</span>
+            <span>{CATEGORIES.length} kategori aktif</span>
           </div>
         </div>
 
         {/* Card 3: Total Customers */}
-        <div className="bg-[#55E6D1] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717]">
+        <div className="bg-[#55E6D1] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] hover-tactile">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-black uppercase text-[#171717] tracking-wider">
               Total Pembeli
@@ -81,15 +98,15 @@ export default function AdminDashboardPage() {
             <Users className="w-6 h-6 text-[#171717]" />
           </div>
           <div className="text-2xl lg:text-3xl font-black text-[#171717] mb-2">
-            0 User
+            {uniqueCustomers} User
           </div>
           <div className="flex items-center gap-1.5 text-xs font-black text-[#171717]">
-            <span>Belum ada data pelanggan</span>
+            <span>{uniqueCustomers > 0 ? 'Pelanggan aktif' : 'Belum ada data pelanggan'}</span>
           </div>
         </div>
 
         {/* Card 4: Total Orders */}
-        <div className="bg-[#FF7547] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] text-white">
+        <div className="bg-[#FF7547] p-6 rounded-2xl border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] text-white hover-tactile">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-black uppercase tracking-wider">
               Total Transaksi
@@ -97,10 +114,10 @@ export default function AdminDashboardPage() {
             <ShoppingBag className="w-6 h-6 text-white" />
           </div>
           <div className="text-2xl lg:text-3xl font-black mb-2">
-            0 Pesanan
+            {totalOrders} Pesanan
           </div>
           <div className="flex items-center gap-1.5 text-xs font-black">
-            <span>Belum ada transaksi</span>
+            <span>{totalOrders > 0 ? 'Tercatat di sistem' : 'Belum ada transaksi'}</span>
           </div>
         </div>
       </div>
@@ -136,7 +153,7 @@ export default function AdminDashboardPage() {
               href="/admin/orders"
               className="text-xs font-black text-[#171717] hover:underline"
             >
-              Lihat Semua (0) →
+              Lihat Semua ({orders.length}) →
             </Link>
           </div>
 
@@ -152,11 +169,33 @@ export default function AdminDashboardPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 font-semibold">
-                <tr>
-                  <td colSpan={5} className="p-8 text-center text-gray-500">
-                    Belum ada pesanan.
-                  </td>
-                </tr>
+                {orders.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="p-8 text-center text-gray-500">
+                      Belum ada pesanan.
+                    </td>
+                  </tr>
+                ) : (
+                  orders.slice(0, 5).map((o) => (
+                    <tr key={o.id || o.order_id} className="hover:bg-gray-50 transition-colors">
+                      <td className="p-3 font-mono font-bold text-[#171717]">{o.order_id || o.id}</td>
+                      <td className="p-3 font-bold text-[#171717]">{o.customer_name}</td>
+                      <td className="p-3 text-gray-600 line-clamp-1">
+                        {(o.items || []).map((i: any) => i.product?.name || 'Item Digital').join(', ')}
+                      </td>
+                      <td className="p-3 font-black text-[#171717]">{formatPrice(o.total_amount)}</td>
+                      <td className="p-3">
+                        <span
+                          className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border border-[#171717] ${
+                            o.status === 'completed' ? 'bg-[#55E6D1] text-[#171717]' : 'bg-[#F9ED32] text-[#171717]'
+                          }`}
+                        >
+                          {o.status === 'completed' ? 'Selesai' : 'Pending'}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

@@ -4,6 +4,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from 'react-hot-toast';
 import { CatalogProvider } from '@/lib/catalog-context';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
 
 export const metadata: Metadata = {
   title: 'Sinzo Store – Game & Software Digital',
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     'game PC',
     'tools developer',
     'template digital',
+    'neo-brutalism store',
   ],
 };
 
@@ -24,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -34,23 +36,26 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col bg-[#F5F0E8] text-[#171717] antialiased">
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 3500,
-            style: {
-              border: '2px solid #171717',
-              borderRadius: '8px',
-              boxShadow: '4px 4px 0px #171717',
-              fontFamily: "'Space Grotesk', sans-serif",
-            },
-          }}
-        />
-        <Navbar />
-        <main className="flex-1">
-          <CatalogProvider>{children}</CatalogProvider>
-        </main>
-        <Footer />
+        <ThemeProvider>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3500,
+              style: {
+                border: '2px solid #171717',
+                borderRadius: '8px',
+                boxShadow: '4px 4px 0px #171717',
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 700,
+              },
+            }}
+          />
+          <CatalogProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </CatalogProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
