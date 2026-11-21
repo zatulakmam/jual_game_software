@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
@@ -93,8 +93,9 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: 'pixelstore-cart',
+      name: 'sinzostore-cart',
       partialize: (state) => ({ items: state.items }),
     }
   )
 )
+

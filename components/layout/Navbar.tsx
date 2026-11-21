@@ -140,10 +140,10 @@ export const Navbar: React.FC = () => {
                 color: '#171717',
               }}
             >
-              PS
+              SZ
             </div>
             <span style={{ fontWeight: 900, fontSize: '20px', color: 'var(--brand-black)', letterSpacing: '-0.5px' }}>
-              PixelStore
+              Sinzo Store
             </span>
           </Link>
 

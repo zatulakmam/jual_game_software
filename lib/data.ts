@@ -1,4 +1,4 @@
-import type { Category, Product } from './types'
+﻿import type { Category, Product } from './types'
 
 export const CATEGORIES: Category[] = [
   {
@@ -9,7 +9,7 @@ export const CATEGORIES: Category[] = [
     icon: 'Monitor',
     color: '#F9ED32',
     bg_color: '#171717',
-    product_count: 2,
+    product_count: 0,
   },
   {
     id: 'cat-2',
@@ -19,7 +19,7 @@ export const CATEGORIES: Category[] = [
     icon: 'Gamepad2',
     color: '#FF7547',
     bg_color: '#1a0a00',
-    product_count: 2,
+    product_count: 0,
   },
   {
     id: 'cat-3',
@@ -39,7 +39,7 @@ export const CATEGORIES: Category[] = [
     icon: 'Code2',
     color: '#A78BFA',
     bg_color: '#0d0020',
-    product_count: 1,
+    product_count: 0,
   },
   {
     id: 'cat-5',
@@ -49,7 +49,7 @@ export const CATEGORIES: Category[] = [
     icon: 'Palette',
     color: '#FF7547',
     bg_color: '#1a0500',
-    product_count: 2,
+    product_count: 0,
   },
   {
     id: 'cat-6',
@@ -59,7 +59,7 @@ export const CATEGORIES: Category[] = [
     icon: 'FileText',
     color: '#F9ED32',
     bg_color: '#1a1700',
-    product_count: 1,
+    product_count: 0,
   },
   {
     id: 'cat-7',
@@ -74,41 +74,7 @@ export const CATEGORIES: Category[] = [
 ]
 
 export const PRODUCTS: Product[] = [
-  {
-    id: 'prod-1',
-    name: 'Windows 11 Pro License',
-    slug: 'windows-11-pro-license',
-    description: 'Lisensi Windows 11 Pro. Cek spesifikasi dan ketentuan lisensi sebelum membeli.',
-    long_description:
-      'Lisensi Windows 11 Pro dengan fitur BitLocker, Remote Desktop, Hyper-V, dan Windows Hello for Business. Periksa persyaratan kompatibilitas serta ketentuan lisensi sebelum membeli.',
-    price: 85000,
-    original_price: 120000,
-    discount_percentage: 29,
-    category_id: 'cat-1',
-    images: [
-      'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1587580601548-3f8a4f7bf218?w=800&h=600&fit=crop',
-    ],
-    cover_image: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=300&fit=crop',
-    features: [
-      'Lisensi Windows 11 Pro',
-      'Aktivasi sesuai ketentuan lisensi',
-      'BitLocker dan Hyper-V',
-      'Dukungan Remote Desktop',
-    ],
-    platform: ['Windows'],
-    compatibility: 'Windows 11 Pro (64-bit), memerlukan TPM 2.0',
-    license_type: 'Seumur Lisensi',
-    rating: 0,
-    review_count: 0,
-    sold_count: 0,
-    is_featured: true,
-    tags: ['windows', 'microsoft', 'os', 'license', 'software'],
-    file_size: 'Tidak berlaku (lisensi digital)',
-    version: '23H2',
-    created_at: '2024-01-15T00:00:00Z',
-    updated_at: '2024-10-01T00:00:00Z',
-  },
+
   {
     id: 'prod-2',
     name: 'Minecraft Java Edition',
@@ -372,3 +338,4 @@ export function getFeaturedProducts(): Product[] {
 export function getProductBySlug(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug)
 }
+

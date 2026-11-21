@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -7,6 +7,9 @@ import {
   Sparkles,
   Layers,
   ChevronRight,
+  Gamepad2,
+  Code2,
+  Monitor,
 } from 'lucide-react';
 import { CATEGORIES } from '@/lib/data';
 import { ProductCard } from '@/components/products/ProductCard';
@@ -36,10 +39,10 @@ export default function HomePage() {
 
         {/* Decorative Stars */}
         <div className="absolute top-1/3 right-1/3 text-3xl font-black text-[#F9ED32] drop-shadow-[2px_2px_0px_#171717] select-none">
-          ✦
+          âœ¦
         </div>
         <div className="absolute bottom-16 right-16 text-4xl font-black text-[#FF7547] drop-shadow-[2px_2px_0px_#171717] select-none">
-          ★
+          â˜…
         </div>
 
         <div className="max-w-7xl mx-auto">
@@ -56,15 +59,31 @@ export default function HomePage() {
 
               {/* H1 Headline */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#171717] tracking-tight leading-[1.05] uppercase mb-6">
-                CARI ITEM <br />
+                CARI SOFTWARE <br />
                 <span className="relative inline-block">
                   <span className="relative z-10 px-2 bg-[#F9ED32] border-[3px] border-[#171717] shadow-[5px_5px_0px_#171717] rounded-lg -rotate-1 inline-block">
-                    DIGITAL FAVORITMU
+                    DAN GAME
                   </span>
                 </span>{' '}
                 <br />
                 DI SINI.
               </h1>
+
+              {/* Icon Badges Row */}
+              <div className="flex flex-wrap gap-3 mb-8">
+                <div className="flex items-center gap-2 px-3 py-2 bg-[#A78BFA] border-2 border-[#171717] shadow-[3px_3px_0px_#171717] rounded-xl">
+                  <Gamepad2 className="w-5 h-5 text-[#171717]" />
+                  <span className="text-xs font-black uppercase text-[#171717]">Console &amp; Game</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-2 bg-[#55E6D1] border-2 border-[#171717] shadow-[3px_3px_0px_#171717] rounded-xl">
+                  <Code2 className="w-5 h-5 text-[#171717]" />
+                  <span className="text-xs font-black uppercase text-[#171717]">Software</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-2 bg-[#FF7547] border-2 border-[#171717] shadow-[3px_3px_0px_#171717] rounded-xl">
+                  <Monitor className="w-5 h-5 text-[#171717]" />
+                  <span className="text-xs font-black uppercase text-[#171717]">Aplikasi</span>
+                </div>
+              </div>
 
               {/* Subheadline */}
               <p className="text-base sm:text-lg md:text-xl font-medium text-gray-800 max-w-xl mb-8 leading-relaxed">
@@ -94,19 +113,19 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center gap-6 pt-6 border-t-2 border-dashed border-gray-400">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-[#55E6D1] border-2 border-[#171717] flex items-center justify-center font-black text-xs">
-                    ✓
+                    âœ“
                   </div>
                   <span className="text-xs md:text-sm font-bold text-[#171717]">Pilihan game & software</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-[#A78BFA] border-2 border-[#171717] flex items-center justify-center font-black text-xs">
-                    ⚡
+                    âš¡
                   </div>
                   <span className="text-xs md:text-sm font-bold text-[#171717]">Detail produk tersedia</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-[#FF7547] border-2 border-[#171717] flex items-center justify-center font-black text-xs">
-                    🛡️
+                    ðŸ›¡ï¸
                   </div>
                   <span className="text-xs md:text-sm font-bold text-[#171717]">Pembayaran belum aktif</span>
                 </div>
@@ -200,19 +219,19 @@ export default function HomePage() {
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="flex items-center gap-8 text-[#F9ED32] font-black text-sm md:text-base tracking-widest uppercase">
               <span>SOFTWARE & APLIKASI</span>
-              <span>✦</span>
+              <span>âœ¦</span>
               <span>GAME PC</span>
-              <span>✦</span>
+              <span>âœ¦</span>
               <span>TOOLS PRODUKTIVITAS</span>
-              <span>✦</span>
+              <span>âœ¦</span>
               <span>TEMPLATE DIGITAL</span>
-              <span>✦</span>
+              <span>âœ¦</span>
               <span>TOOLS DEVELOPER</span>
-              <span>✦</span>
+              <span>âœ¦</span>
               <span>ASET DESAIN</span>
-              <span>✦</span>
+              <span>âœ¦</span>
               <span>KATALOG SINZO STORE</span>
-              <span>✦</span>
+              <span>âœ¦</span>
             </div>
           ))}
         </div>
@@ -446,3 +465,4 @@ export default function HomePage() {
     </div>
   );
 }
+

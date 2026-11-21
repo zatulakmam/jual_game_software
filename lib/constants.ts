@@ -1,14 +1,14 @@
-export const SITE_NAME = 'Sinzo Store'
+﻿export const SITE_NAME = 'Sinzo Store'
 export const SITE_DESCRIPTION = 'Tempat cari game, software, dan item digital.'
 
 export const PAYMENT_METHODS = [
-  { id: 'bca', name: 'BCA Transfer', icon: '🏦', type: 'bank' },
-  { id: 'bni', name: 'BNI Transfer', icon: '🏦', type: 'bank' },
-  { id: 'mandiri', name: 'Mandiri Transfer', icon: '🏦', type: 'bank' },
-  { id: 'gopay', name: 'GoPay', icon: '💚', type: 'ewallet' },
-  { id: 'ovo', name: 'OVO', icon: '💜', type: 'ewallet' },
-  { id: 'dana', name: 'DANA', icon: '💙', type: 'ewallet' },
-  { id: 'qris', name: 'QRIS', icon: '📱', type: 'qr' },
+  { id: 'bca', name: 'BCA Transfer', icon: 'ðŸ¦', type: 'bank' },
+  { id: 'bni', name: 'BNI Transfer', icon: 'ðŸ¦', type: 'bank' },
+  { id: 'mandiri', name: 'Mandiri Transfer', icon: 'ðŸ¦', type: 'bank' },
+  { id: 'gopay', name: 'GoPay', icon: 'ðŸ’š', type: 'ewallet' },
+  { id: 'ovo', name: 'OVO', icon: 'ðŸ’œ', type: 'ewallet' },
+  { id: 'dana', name: 'DANA', icon: 'ðŸ’™', type: 'ewallet' },
+  { id: 'qris', name: 'QRIS', icon: 'ðŸ“±', type: 'qr' },
 ] as const
 
 export const ORDER_STATUSES = {
@@ -52,8 +52,9 @@ export const FOOTER_LINKS = {
 }
 
 export const SOCIAL_LINKS = {
-  twitter: 'https://twitter.com/pixelstore',
-  instagram: 'https://instagram.com/pixelstore',
-  discord: 'https://discord.gg/pixelstore',
-  github: 'https://github.com/pixelstore',
+  twitter: 'https://twitter.com/sinzostore',
+  instagram: 'https://instagram.com/sinzostore',
+  discord: 'https://discord.gg/sinzostore',
+  github: 'https://github.com/sinzostore',
 }
+
