@@ -15,10 +15,12 @@ interface OrderItem {
 
 interface OrderRecord {
   id: string;
-  order_id: string;
-  customer_name: string;
-  customer_email: string;
-  total_amount: number;
+  order_id?: string;
+  customer_name?: string;
+  customer_email?: string;
+  user_id?: string;
+  total?: number;
+  total_amount?: number;
   payment_method: string;
   payment_status: 'paid' | 'unpaid' | 'pending';
   status: 'pending' | 'processing' | 'completed' | 'cancelled';
@@ -177,15 +179,15 @@ export default function AdminOrdersPage() {
                   <tr key={o.id || o.order_id} className="hover:bg-gray-50 transition-colors">
                     <td className="p-4 font-mono font-black text-[#171717]">{o.order_id || o.id}</td>
                     <td className="p-4">
-                      <p className="font-bold text-[#171717]">{o.customer_name}</p>
-                      <p className="text-[10px] text-gray-500">{o.customer_email}</p>
+                      <p className="font-bold text-[#171717]">{o.customer_name || o.user_id || 'Guest'}</p>
+                      <p className="text-[10px] text-gray-500">{o.customer_email || '-'}</p>
                     </td>
                     <td className="p-4">
                       <p className="text-gray-800 line-clamp-1">{itemNames || 'Item Digital'}</p>
                       <p className="text-[10px] text-gray-400 font-bold">{orderDate}</p>
                     </td>
                     <td className="p-4 font-black text-[#171717] text-sm">
-                      {formatPrice(o.total_amount)}
+                      {formatPrice(o.total ?? o.total_amount)}
                     </td>
                     <td className="p-4">
                       <span className="bg-gray-100 px-2 py-0.5 rounded border border-gray-300 font-bold text-[10px]">

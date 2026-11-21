@@ -26,9 +26,9 @@ export default function AdminDashboardPage() {
       .catch((e) => console.error(e));
   }, []);
 
-  const totalRevenue = orders.reduce((sum, o) => sum + (o.total_amount || 0), 0);
+  const totalRevenue = orders.reduce((sum, o) => sum + (o.total ?? o.total_amount ?? 0), 0);
   const totalOrders = orders.length;
-  const uniqueCustomers = new Set(orders.map((o) => o.customer_email)).size;
+  const uniqueCustomers = new Set(orders.map((o) => o.customer_email || o.user_id || 'User')).size;
 
   return (
     <div className="p-6 lg:p-10 space-y-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -179,11 +179,11 @@ export default function AdminDashboardPage() {
                   orders.slice(0, 5).map((o) => (
                     <tr key={o.id || o.order_id} className="hover:bg-gray-50 transition-colors">
                       <td className="p-3 font-mono font-bold text-[#171717]">{o.order_id || o.id}</td>
-                      <td className="p-3 font-bold text-[#171717]">{o.customer_name}</td>
+                      <td className="p-3 font-bold text-[#171717]">{o.customer_name || o.user_id || 'Pelanggan'}</td>
                       <td className="p-3 text-gray-600 line-clamp-1">
                         {(o.items || []).map((i: any) => i.product?.name || 'Item Digital').join(', ')}
                       </td>
-                      <td className="p-3 font-black text-[#171717]">{formatPrice(o.total_amount)}</td>
+                      <td className="p-3 font-black text-[#171717]">{formatPrice(o.total ?? o.total_amount)}</td>
                       <td className="p-3">
                         <span
                           className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border border-[#171717] ${

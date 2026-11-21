@@ -11,9 +11,17 @@ export function cn(...inputs: ClassValue[]) {
 
 /**
  * Format number to Indonesian Rupiah (e.g., Rp85.000)
+ * Safe against undefined, null, NaN, or non-numeric values
  */
-export function formatPrice(price: number): string {
-  const formatted = price
+export function formatPrice(price?: number | null | string): string {
+  if (price === undefined || price === null || price === '') {
+    return 'Rp0'
+  }
+  const num = typeof price === 'string' ? Number(price) : price
+  if (isNaN(num)) {
+    return 'Rp0'
+  }
+  const formatted = Math.round(num)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
   return `Rp${formatted}`
@@ -22,16 +30,22 @@ export function formatPrice(price: number): string {
 /**
  * Format ISO date string to Indonesian date format (e.g., "15 November 2024")
  */
-export function formatDate(date: string): string {
-  const months = [
-    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-  ]
-  const d = new Date(date)
-  const day = d.getDate()
-  const month = months[d.getMonth()]
-  const year = d.getFullYear()
-  return `${day} ${month} ${year}`
+export function formatDate(date?: string | null): string {
+  if (!date) return '-'
+  try {
+    const months = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ]
+    const d = new Date(date)
+    if (isNaN(d.getTime())) return '-'
+    const day = d.getDate()
+    const month = months[d.getMonth()]
+    const year = d.getFullYear()
+    return `${day} ${month} ${year}`
+  } catch {
+    return '-'
+  }
 }
 
 /**
